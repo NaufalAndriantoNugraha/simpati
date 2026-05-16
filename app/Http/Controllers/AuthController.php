@@ -52,4 +52,27 @@ class AuthController extends Controller
     {
         return Inertia::render('customer/forgot-password');
     }
+
+    function adminRegisterView()
+    {
+        return Inertia::render('admin/register');
+    }
+
+    function adminRegister(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|min:6|max:30',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|max:30',
+        ]);
+
+        $user = new User();
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role = 'admin';
+        $user->save();
+
+        return redirect('/admin/register')->with('success', 'Registration Successful');
+    }
 }

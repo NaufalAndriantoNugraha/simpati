@@ -10,11 +10,6 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-// Untuk sementara dapat dikases publik,
-// nanti akan diganti setelah pembuatan UI, dan back-endnya selesai.
-Route::get('/fill-biodata', function () {
-    return Inertia::render('fill-biodata');
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', function () {
