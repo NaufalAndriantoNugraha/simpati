@@ -36,7 +36,7 @@ export default function ForgotPassword() {
                 </div>
 
                 <div className="mt-5 border-t pt-4 text-center">
-                    <a href="/resources/js/pages/customer/login" className="text-sm text-gray-500 hover:text-black">
+                    <a href="/login" className="text-sm text-gray-500 hover:text-black">
                         Kembali ke halaman masuk
                     </a>
                 </div>

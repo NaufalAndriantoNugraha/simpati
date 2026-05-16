@@ -5,9 +5,9 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect()->route('dashboard');
+        return redirect('dashboard');
     }
-    return redirect()->route('login');
+    return redirect('login');
 });
 
 // Untuk sementara dapat dikases publik,

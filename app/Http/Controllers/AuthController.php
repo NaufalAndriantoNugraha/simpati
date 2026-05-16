@@ -37,4 +37,19 @@ class AuthController extends Controller
             return redirect()->route('/login')->with('error', $error->getMessage());
         }
     }
+
+    function customerLoginView()
+    {
+        return Inertia::render('customer/login');
+    }
+
+    function customerLogin(Request $request)
+    {
+
+    }
+
+    function forgotPasswordView()
+    {
+        return Inertia::render('customer/forgot-password');
+    }
 }
