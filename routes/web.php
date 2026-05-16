@@ -1,20 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect('dashboard');
+        if (Auth::user()->role === 'admin') {
+            return redirect('/admin/dashboard/profile');
+        }
     }
-    return redirect('login');
-});
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    return redirect('/login');
 });
 
 require __DIR__ . '/settings.php';

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
@@ -21,7 +22,6 @@ class AuthController extends Controller
             'username' => 'required|min:6|max:30',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|max:30',
-            'role' => 'required',
         ]);
 
         try {
@@ -29,12 +29,12 @@ class AuthController extends Controller
             $user->username = $request->username;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
-            $user->role = $request->role;
+            $user->role = 'student';
             $user->save();
 
-            return redirect()->route('/login')->with('success', 'Registration Successful');
+            return redirect('/login')->with('success', 'Registration Successful');
         } catch (Exception $error) {
-            return redirect()->route('/login')->with('error', $error->getMessage());
+            return redirect('/login')->with('error', $error->getMessage());
         }
     }
 
@@ -73,6 +73,43 @@ class AuthController extends Controller
         $user->role = 'admin';
         $user->save();
 
-        return redirect('/admin/register')->with('success', 'Registration Successful');
+        return redirect('/admin/login')->with('success', 'Registration Successful');
+    }
+
+    function adminLoginView()
+    {
+        return Inertia::render('admin/login');
+    }
+
+    function adminLogin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+            if (Auth::user()->role !== 'admin') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Akun ini bukan akun admin.',
+                ]);
+            }
+
+            $request->session()->regenerate();
+            return redirect('/admin/dashboard');
+        }
+
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ]);
+    }
+
+    function adminLogout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/admin/login');
     }
 }

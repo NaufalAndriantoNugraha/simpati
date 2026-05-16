@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -21,9 +22,25 @@ Route::middleware('guest')->group(function () {
     });
 
     // Admin route
+    Route::get('admin', function () {
+        return redirect('/admin/login');
+    });
+
     Route::get('admin/register', [AuthController::class, 'adminRegisterView']);
     Route::post('admin/register', [AuthController::class, 'adminRegister']);
+
+    Route::get('admin/login', [AuthController::class, 'adminLoginView']);
+    Route::post('admin/login', [AuthController::class, 'adminLogin']);
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', IsAdmin::class])->group(function () {
+    Route::get('admin/dashboard', function () {
+        return redirect('/admin/dashboard/profile');
+    });
+
+    Route::get('admin/dashboard/profile', function () {
+        return Inertia::render('admin/profile');
+    });
+
+    Route::post('admin/logout', [AuthController::class, 'adminLogout']);
 });
