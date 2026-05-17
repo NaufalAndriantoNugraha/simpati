@@ -49,4 +49,8 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::post('/admin/dashboard/study-program', [StudyProgramController::class, 'store']);
     Route::put('/admin/dashboard/study-program/{studyProgram}', [StudyProgramController::class, 'update']);
     Route::delete('/admin/dashboard/study-program/{studyProgram}', [StudyProgramController::class, 'destroy']);
+
+    Route::get('/admin/dashboard/contact', function () {
+        return Inertia::render('admin/contact');
+    });
 });

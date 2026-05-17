@@ -4,12 +4,13 @@ import React from 'react';
 
 interface Props {
     children: React.ReactNode;
-    active: 'profile' | 'study-program';
+    active: 'profile' | 'study-program' | 'contact';
 }
 
 const menuItems = [
     { key: 'profile', label: 'Profil', href: '/admin/dashboard/profile', icon: <User size={18} /> },
     { key: 'study-program', label: 'Kelola Program', href: '/admin/dashboard/study-program', icon: <BookOpen size={18} /> },
+    { key: 'contact', label: 'Kontak Pengembang', href: '/admin/dashboard/contact', icon: <User size={18} /> },
 ];
 
 export default function AdminLayout({ children, active }: Props) {
