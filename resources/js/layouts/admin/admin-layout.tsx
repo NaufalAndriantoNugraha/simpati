@@ -1,13 +1,16 @@
 import { Link } from '@inertiajs/react';
-import { LogOut, User } from 'lucide-react';
+import { BookOpen, LogOut, User } from 'lucide-react';
 import React from 'react';
 
 interface Props {
     children: React.ReactNode;
-    active: 'profile';
+    active: 'profile' | 'study-program';
 }
 
-const menuItems = [{ key: 'profile', label: 'Profil', href: '/admin/profile', icon: <User size={18} /> }];
+const menuItems = [
+    { key: 'profile', label: 'Profil', href: '/admin/dashboard/profile', icon: <User size={18} /> },
+    { key: 'study-program', label: 'Kelola Program', href: '/admin/dashboard/study-program', icon: <BookOpen size={18} /> },
+];
 
 export default function AdminLayout({ children, active }: Props) {
     return (
@@ -24,8 +27,8 @@ export default function AdminLayout({ children, active }: Props) {
                             <Link
                                 key={item.key}
                                 href={item.href}
-                                className={`flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm transition ${
-                                    isActive ? 'bg-black font-semibold text-white' : 'text-gray-600 hover:bg-gray-100'
+                                className={`mb-2 flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm transition ${
+                                    isActive ? 'bg-black font-semibold text-white' : 'bg-gray-100 text-gray-600'
                                 }`}
                             >
                                 {item.icon}

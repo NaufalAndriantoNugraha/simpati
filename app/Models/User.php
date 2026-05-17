@@ -29,6 +29,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function studyPrograms()
+    {
+        return $this->hasMany(StudyProgram::class, 'admin_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

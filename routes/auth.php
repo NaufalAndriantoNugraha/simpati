@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\StudyProgramController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,4 +44,9 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     });
 
     Route::post('admin/logout', [AuthController::class, 'adminLogout']);
+
+    Route::get('/admin/dashboard/study-program', [StudyProgramController::class, 'index']);
+    Route::post('/admin/dashboard/study-program', [StudyProgramController::class, 'store']);
+    Route::put('/admin/dashboard/study-program/{studyProgram}', [StudyProgramController::class, 'update']);
+    Route::delete('/admin/dashboard/study-program/{studyProgram}', [StudyProgramController::class, 'destroy']);
 });
