@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudyProgramController;
 use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsStudent;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,12 +17,6 @@ Route::middleware('guest')->group(function () {
 
     Route::get('forgot-password', [AuthController::class, 'forgotPasswordView']);
 
-    // Untuk sementara dapat dikases publik,
-    // nanti akan diganti setelah pembuatan UI, dan back-endnya selesai.
-    Route::get('fill-biodata', function () {
-        return Inertia::render('customer/fill-biodata');
-    });
-
     // Admin route
     Route::get('admin', function () {
         return redirect('/admin/login');
@@ -32,6 +27,25 @@ Route::middleware('guest')->group(function () {
 
     Route::get('admin/login', [AuthController::class, 'adminLoginView']);
     Route::post('admin/login', [AuthController::class, 'adminLogin']);
+});
+
+Route::middleware(['auth', IsStudent::class])->group(function () {
+    Route::get('fill-biodata', function () {
+        return Inertia::render('customer/fill-biodata');
+    });
+    Route::post('fill-biodata', [AuthController::class, 'fillBiodata']);
+
+    Route::get('student/dashboard', function () {
+        return redirect('/student/dashboard/profile');
+    });
+
+    Route::get('student/dashboard/profile', function () {
+        return Inertia::render('customer/profile', [
+            'profile' => Auth::user()->studentProfile,
+        ]);
+    });
+
+    Route::post('student/logout', [AuthController::class, 'studentLogout']);
 });
 
 Route::middleware(['auth', IsAdmin::class])->group(function () {

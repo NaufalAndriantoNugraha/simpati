@@ -7,6 +7,12 @@ Route::get('/', function () {
         if (Auth::user()->role === 'admin') {
             return redirect('/admin/dashboard/profile');
         }
+
+        if (!Auth::user()->studentProfile) {
+            return redirect('/fill-biodata');
+        }
+
+        return redirect('/student/dashboard/profile');
     }
     return redirect('/login');
 });

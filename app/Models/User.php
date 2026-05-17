@@ -34,6 +34,11 @@ class User extends Authenticatable
         return $this->hasMany(StudyProgram::class, 'admin_id');
     }
 
+    public function studentProfile()
+    {
+        return $this->hasOne(StudentProfile::class, 'student_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

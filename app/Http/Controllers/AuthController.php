@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StudentProfile;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -45,7 +46,31 @@ class AuthController extends Controller
 
     function customerLogin(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
+        if (Auth::attempt($request->only('email', 'password'))) {
+            if (Auth::user()->role === 'admin') {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Silahkan login melalui halaman admin.',
+                ]);
+            }
+
+            $request->session()->regenerate();
+
+            if (!Auth::user()->studentProfile) {
+                return redirect('/fill-biodata');
+            }
+
+            return redirect('/student/dashboard/profile');
+        }
+
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ]);
     }
 
     function forgotPasswordView()
@@ -111,5 +136,47 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/admin/login');
+    }
+
+    function fillBiodata(Request $request)
+    {
+        $request->validate([
+            'full_name' => 'required',
+            'gender' => 'required|in:male,female',
+            'birth_date' => 'required|date',
+            'birth_place' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+            'phone_number' => 'required',
+            'institution_name' => 'required',
+            'major' => 'required',
+            'semester' => 'required|integer',
+        ]);
+
+        StudentProfile::create([
+            'student_id' => Auth::id(),
+            'full_name' => $request->full_name,
+            'gender' => $request->gender,
+            'birth_date' => $request->birth_date,
+            'birth_place' => $request->birth_place,
+            'address' => $request->address,
+            'city' => $request->city,
+            'province' => $request->province,
+            'phone_number' => $request->phone_number,
+            'institution_name' => $request->institution_name,
+            'major' => $request->major,
+            'semester' => $request->semester,
+        ]);
+
+        return redirect('/student/dashboard/profile');
+    }
+
+    function studentLogout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
 }
