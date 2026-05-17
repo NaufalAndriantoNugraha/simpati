@@ -1,15 +1,16 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, LogOut, User } from 'lucide-react';
+import { BookOpen, Layers, LogOut, User } from 'lucide-react';
 import React from 'react';
 
 interface Props {
     children: React.ReactNode;
-    active: 'profile' | 'study-program';
+    active: 'profile' | 'study-program' | 'contact';
 }
 
 const menuItems = [
     { key: 'profile', label: 'Profil', href: '/admin/dashboard/profile', icon: <User size={18} /> },
     { key: 'study-program', label: 'Kelola Program', href: '/admin/dashboard/study-program', icon: <BookOpen size={18} /> },
+    { key: 'contact', label: 'Kontak Pengembang', href: '/admin/dashboard/contact', icon: <User size={18} /> },
 ];
 
 export default function AdminLayout({ children, active }: Props) {
@@ -17,6 +18,7 @@ export default function AdminLayout({ children, active }: Props) {
         <div className="flex min-h-screen">
             <aside className="flex w-64 flex-col border-r bg-white">
                 <div className="flex items-center gap-2 border-b px-6 py-5">
+                    <Layers />
                     <span className="text-lg font-bold">SIMPATI</span>
                 </div>
 
