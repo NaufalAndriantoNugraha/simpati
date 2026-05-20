@@ -52,6 +52,10 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
         ]);
     });
 
+    Route::get('student/dashboard/contact', function () {
+        return Inertia::render('customer/contact');
+    });
+
     Route::post('student/logout', [AuthController::class, 'studentLogout']);
 });
 

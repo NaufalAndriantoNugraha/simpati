@@ -4,12 +4,13 @@ import React from 'react';
 
 interface Props {
     children: React.ReactNode;
-    active: 'profile' | 'programs';
+    active: 'profile' | 'programs' | 'contact';
 }
 
 const menuItems = [
     { key: 'profile', label: 'Profil', href: '/student/dashboard/profile', icon: <User size={18} /> },
     { key: 'programs', label: 'Program Studi', href: '/student/dashboard/programs', icon: <BookOpen size={18} /> },
+    { key: 'contact', label: 'Kontak Admin', href: '/student/dashboard/contact', icon: <User size={18} /> },
 ];
 
 export default function StudentLayout({ children, active }: Props) {
