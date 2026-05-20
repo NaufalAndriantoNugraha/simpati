@@ -1,13 +1,16 @@
 import { Link } from '@inertiajs/react';
-import { Layers, LogOut, User } from 'lucide-react';
+import { BookOpen, Layers, LogOut, User } from 'lucide-react';
 import React from 'react';
 
 interface Props {
     children: React.ReactNode;
-    active: 'profile';
+    active: 'profile' | 'programs';
 }
 
-const menuItems = [{ key: 'profile', label: 'Profil', href: '/student/dashboard/profile', icon: <User size={18} /> }];
+const menuItems = [
+    { key: 'profile', label: 'Profil', href: '/student/dashboard/profile', icon: <User size={18} /> },
+    { key: 'programs', label: 'Program Studi', href: '/student/dashboard/programs', icon: <BookOpen size={18} /> },
+];
 
 export default function StudentLayout({ children, active }: Props) {
     return (

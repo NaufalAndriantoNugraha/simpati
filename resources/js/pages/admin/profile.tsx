@@ -1,8 +1,20 @@
 import AdminLayout from '@/layouts/admin/admin-layout';
+import { PageProps } from '@inertiajs/core';
 import { usePage } from '@inertiajs/react';
 
+interface User {
+    username: string;
+    email: string;
+}
+
+interface AdminProfileProps extends PageProps {
+    auth: {
+        user: User;
+    };
+}
+
 export default function Profile() {
-    const { auth } = usePage().props as any;
+    const { auth } = usePage<AdminProfileProps>().props;
 
     return (
         <AdminLayout active="profile">

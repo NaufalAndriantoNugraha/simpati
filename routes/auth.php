@@ -45,6 +45,13 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
         ]);
     });
 
+    Route::get('student/dashboard/programs', function () {
+        $programs = \App\Models\StudyProgram::where('status', 'open')->get();
+        return Inertia::render('customer/study-programs', [
+            'programs' => $programs,
+        ]);
+    });
+
     Route::post('student/logout', [AuthController::class, 'studentLogout']);
 });
 
