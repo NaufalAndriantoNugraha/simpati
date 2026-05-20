@@ -16,10 +16,10 @@ const menuItems = [
 export default function AdminLayout({ children, active }: Props) {
     return (
         <div className="flex min-h-screen">
-            <aside className="flex w-64 flex-col border-r bg-white">
+            <aside className="flex w-66 flex-col border-r bg-white">
                 <div className="flex items-center gap-2 border-b px-6 py-5">
                     <Layers />
-                    <span className="text-lg font-bold">SIMPATI</span>
+                    <span className="text-lg font-bold">DASHBOARD ADMIN</span>
                 </div>
 
                 <nav className="flex flex-1 flex-col gap-1 p-3">
