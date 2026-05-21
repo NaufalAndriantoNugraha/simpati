@@ -1,7 +1,17 @@
 import AdminLayout from '@/layouts/admin/admin-layout';
+import { useForm } from '@inertiajs/react';
 import { Mail, RectangleEllipsis } from 'lucide-react';
 
 export default function EmailPassword() {
+    const { data, setData, put, processing, errors } = useForm({
+        email: '',
+    });
+
+    const submitEmail = (e: React.FormEvent) => {
+        e.preventDefault();
+        put('/admin/dashboard/email-password/email');
+    };
+
     return (
         <AdminLayout active="email-password">
             <div className="space-y-6">
@@ -12,7 +22,7 @@ export default function EmailPassword() {
                 </div>
 
                 <div className="space-y-5">
-                    <div className="rounded-md border bg-white p-6 shadow-sm transition hover:shadow-md">
+                    <form onSubmit={submitEmail} className="rounded-md border bg-white p-6 shadow-sm">
                         <div className="flex items-start gap-4">
                             <div className="rounded-md bg-blue-100 p-3 text-blue-600">
                                 <Mail size={22} />
@@ -21,25 +31,33 @@ export default function EmailPassword() {
                             <div className="w-full">
                                 <h2 className="text-lg font-semibold text-gray-800">Ganti Email</h2>
 
-                                <p className="mt-1 text-sm text-gray-500">Gunakan email aktif untuk menerima informasi dan notifikasi akun.</p>
+                                <p className="mt-1 text-sm text-gray-500">Gunakan email aktif untuk menerima notifikasi akun.</p>
 
                                 <div className="mt-5">
                                     <label className="mb-2 block text-sm font-medium text-gray-700">Email Baru</label>
 
                                     <input
                                         type="email"
-                                        placeholder="Masukkan email baru"
                                         required
+                                        value={data.email}
+                                        onChange={(e) => setData('email', e.target.value)}
+                                        placeholder="Masukkan email baru"
                                         className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                     />
+
+                                    {errors.email && <p className="mt-2 text-sm text-red-500">{errors.email}</p>}
                                 </div>
 
-                                <button className="mt-5 rounded-md bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800">
-                                    Simpan Email
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="mt-5 rounded-md bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                >
+                                    {processing ? 'Menyimpan...' : 'Simpan Email'}
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
                     <div className="rounded-md border bg-white p-6 shadow-sm transition hover:shadow-md">
                         <div className="flex items-start gap-4">

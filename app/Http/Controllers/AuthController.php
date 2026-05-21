@@ -130,6 +130,18 @@ class AuthController extends Controller
         ]);
     }
 
+    function updateEmail(Request $request) {
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->email = $request->email;
+        $user->save();
+
+        return back()->with('success', 'Email berhasil diubah');
+    }
+
     function adminLogout(Request $request)
     {
         Auth::logout();

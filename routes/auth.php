@@ -90,4 +90,6 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     Route::get('/admin/dashboard/email-password', function () {
         return Inertia::render('admin/email-password');
     });
+
+    Route::put('/admin/dashboard/email-password/email', [AuthController::class, 'updateEmail']);
 });
