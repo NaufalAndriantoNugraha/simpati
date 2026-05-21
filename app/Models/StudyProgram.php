@@ -22,4 +22,9 @@ class StudyProgram extends Model
     {
         return $this->belongsTo(User::class, 'admin_id');
     }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'program_id');
+    }
 }

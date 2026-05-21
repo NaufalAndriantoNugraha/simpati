@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->hasOne(StudentProfile::class, 'student_id');
     }
 
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'student_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

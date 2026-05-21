@@ -1,5 +1,5 @@
 import StudentLayout from '@/layouts/student/student-layout';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 interface StudyProgram {
@@ -15,8 +15,8 @@ interface StudyProgram {
 }
 
 interface PageProps {
-    programs: StudyProgram[];
-    registeredProgramIds: number[];
+    program: StudyProgram;
+    isRegistered: boolean;
     [key: string]: unknown;
 }
 
@@ -43,8 +43,8 @@ function ConfirmModal({
                         <span className="font-semibold">Rp {Number(program.price).toLocaleString('id-ID')}</span>
                     </div>
                     <div className="mt-2 flex justify-between">
-                        <span className="text-gray-400">Kuota</span>
-                        <span className="font-semibold">{program.student_quota} orang</span>
+                        <span className="text-gray-400">Sisa Kuota</span>
+                        <span className="font-semibold">{program.remaining_quota} orang</span>
                     </div>
                     <div className="mt-2 flex justify-between">
                         <span className="text-gray-400">Pendaftaran Ditutup</span>
@@ -72,7 +72,8 @@ function ConfirmModal({
     );
 }
 
-function ProgramCard({ program }: { program: StudyProgram; isRegistered: boolean }) {
+export default function ProgramDetail() {
+    const { program, isRegistered } = usePage<PageProps>().props;
     const [showModal, setShowModal] = useState(false);
     const { post, processing } = useForm({
         program_id: program.id,
@@ -85,64 +86,60 @@ function ProgramCard({ program }: { program: StudyProgram; isRegistered: boolean
     }
 
     return (
-        <>
+        <StudentLayout active="programs">
             {showModal && <ConfirmModal program={program} onConfirm={handleConfirm} onCancel={() => setShowModal(false)} processing={processing} />}
 
-            <div className="rounded-xl border bg-white p-6 shadow-sm">
-                <div className="mb-4 flex items-start justify-between">
-                    <h2 className="text-lg font-bold">{program.name}</h2>
-                    <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700">Open</span>
+            <div className="mb-6 flex items-center gap-3">
+                <a href="/student/dashboard/programs" className="text-sm text-gray-400 hover:text-black">
+                    ← Kembali
+                </a>
+            </div>
+
+            <div className="rounded-xl border bg-white p-8 shadow-sm">
+                <div className="mb-6 flex items-start justify-between">
+                    <div>
+                        <h1 className="text-2xl font-bold">{program.name}</h1>
+                        <span className="mt-2 inline-block rounded-full bg-green-100 px-3 py-0.5 text-xs font-semibold text-green-700">Open</span>
+                    </div>
+                    <p className="text-2xl font-bold">Rp {Number(program.price).toLocaleString('id-ID')}</p>
                 </div>
 
-                <p className="mb-4 text-sm text-gray-500">{program.description}</p>
+                <p className="mb-8 text-gray-600">{program.description}</p>
 
-                <div className="mb-4 grid grid-cols-2 gap-2 text-sm">
-                    <div>
+                <div className="mb-8 grid grid-cols-2 gap-4">
+                    <div className="rounded-lg border p-4">
+                        <p className="text-xs text-gray-400">Kuota Awal</p>
+                        <p className="mt-1 font-semibold">{program.student_quota} orang</p>
+                    </div>
+                    <div className="rounded-lg border p-4">
                         <p className="text-xs text-gray-400">Sisa Kuota</p>
-                        <p className="font-semibold">{program.remaining_quota} orang</p>
+                        <p className="mt-1 font-semibold">{program.remaining_quota} orang</p>
                     </div>
-                    <div>
-                        <p className="text-xs text-gray-400">Harga</p>
-                        <p className="font-semibold">Rp {Number(program.price).toLocaleString('id-ID')}</p>
-                    </div>
-                    <div>
+                    <div className="rounded-lg border p-4">
                         <p className="text-xs text-gray-400">Pendaftaran Dibuka</p>
-                        <p className="font-semibold">{program.registration_open}</p>
+                        <p className="mt-1 font-semibold">{program.registration_open}</p>
                     </div>
-                    <div>
+                    <div className="rounded-lg border p-4">
                         <p className="text-xs text-gray-400">Pendaftaran Ditutup</p>
-                        <p className="font-semibold">{program.registration_close}</p>
+                        <p className="mt-1 font-semibold">{program.registration_close}</p>
                     </div>
                 </div>
 
-                <Link
-                    href={'/student/dashboard/programs/' + program.id}
-                    className="block w-full rounded-md bg-black py-2 text-center text-sm font-semibold text-white hover:bg-gray-800"
-                >
-                    Lihat Detail
-                </Link>
-            </div>
-        </>
-    );
-}
-
-export default function Programs() {
-    const { programs, registeredProgramIds } = usePage<PageProps>().props;
-
-    return (
-        <StudentLayout active="programs">
-            <div className="mb-6">
-                <h1 className="text-2xl font-bold">Program Studi</h1>
-                <p className="text-gray-500">Pilih program studi independen yang tersedia</p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {programs.length === 0 ? (
-                    <p className="text-gray-400">Belum ada program studi yang tersedia.</p>
+                {isRegistered ? (
+                    <button disabled className="w-full cursor-not-allowed rounded-md bg-gray-200 py-3 text-sm font-semibold text-gray-500">
+                        Sudah Terdaftar
+                    </button>
+                ) : program.remaining_quota <= 0 ? (
+                    <button disabled className="w-full cursor-not-allowed rounded-md bg-gray-200 py-3 text-sm font-semibold text-gray-500">
+                        Kuota Penuh
+                    </button>
                 ) : (
-                    programs.map((program) => (
-                        <ProgramCard key={program.id} program={program} isRegistered={registeredProgramIds?.includes(program.id)} />
-                    ))
+                    <button
+                        onClick={() => setShowModal(true)}
+                        className="w-full rounded-md bg-black py-3 text-sm font-semibold text-white hover:bg-gray-800"
+                    >
+                        Daftar Sekarang
+                    </button>
                 )}
             </div>
         </StudentLayout>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\StudyProgramController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsStudent;
@@ -42,16 +43,44 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
 
     Route::get('student/dashboard/profile', function () {
         return Inertia::render('customer/profile', [
-            'profile' => Auth::user()->studentProfile,
+        'profile' => Auth::user()->studentProfile,
         ]);
     });
 
     Route::get('student/dashboard/programs', function () {
-        $programs = \App\Models\StudyProgram::where('status', 'open')->get();
+        $programs = \App\Models\StudyProgram::where('status', 'open')
+        ->withCount('registrations')
+        ->get()
+        ->map(function ($program) {
+            $program->remaining_quota = $program->student_quota - $program->registrations_count;
+            return $program;
+        });
+
+        $registeredProgramIds = \App\Models\Registration::where('student_id', Auth::id())
+        ->pluck('program_id')
+        ->toArray();
+
         return Inertia::render('customer/study-programs', [
-            'programs' => $programs,
+        'programs' => $programs,
+        'registeredProgramIds' => $registeredProgramIds,
         ]);
     });
+
+    Route::get('student/dashboard/programs/{id}', function ($id) {
+        $program = \App\Models\StudyProgram::withCount('registrations')->findOrFail($id);
+        $program->remaining_quota = $program->student_quota - $program->registrations_count;
+
+        $isRegistered = \App\Models\Registration::where('student_id', Auth::id())
+            ->where('program_id', $id)
+            ->exists();
+
+        return Inertia::render('customer/program-detail', [
+            'program' => $program,
+            'isRegistered' => $isRegistered,
+        ]);
+    });
+
+    Route::post('student/register-program', [RegistrationController::class, 'store']);
 
     Route::get('student/dashboard/contact', function () {
         return Inertia::render('customer/contact');
