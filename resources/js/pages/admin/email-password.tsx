@@ -5,16 +5,17 @@ import { useState } from 'react';
 
 export default function EmailPassword() {
     const [showEmailPopup, setShowEmailPopup] = useState(false);
+    const [showPasswordPopup, setShowPasswordPopup] = useState(false);
 
     const emailForm = useForm({
         email: '',
     });
 
-    // const passwordForm = useForm({
-    //     current_password: '',
-    //     new_password: '',
-    //     new_password_confirmation: '',
-    // });
+    const passwordForm = useForm({
+        current_password: '',
+        new_password: '',
+        new_password_confirmation: '',
+    });
 
     const submitEmail = (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,10 +31,20 @@ export default function EmailPassword() {
         emailForm.setData('email', '');
     };
 
-    // const submitPassword = (e: React.FormEvent) => {
-    //     e.preventDefault();
-    //     passwordForm.put('/admin/dashboard/email-password/password');
-    // };
+    const submitPassword = (e: React.FormEvent) => {
+        e.preventDefault();
+        setShowPasswordPopup(true);
+    };
+
+    const confirmUpdatePassword = () => {
+        passwordForm.put('/admin/dashboard/email-password/password', {
+            onSuccess: () => {
+                setShowPasswordPopup(false);
+
+                passwordForm.reset();
+            },
+        });
+    };
 
     return (
         <AdminLayout active="email-password">
@@ -112,7 +123,7 @@ export default function EmailPassword() {
                         </div>
                     )}
 
-                    <div className="rounded-md border bg-white p-6 shadow-sm transition hover:shadow-md">
+                    <form onSubmit={submitPassword} className="rounded-md border bg-white p-6 shadow-sm transition hover:shadow-md">
                         <div className="flex items-start gap-4">
                             <div className="rounded-md bg-red-100 p-3 text-red-600">
                                 <RectangleEllipsis size={22} />
@@ -129,10 +140,16 @@ export default function EmailPassword() {
 
                                         <input
                                             type="password"
-                                            placeholder="Masukkan password lama"
                                             required
+                                            value={passwordForm.data.current_password}
+                                            onChange={(e) => passwordForm.setData('current_password', e.target.value)}
+                                            placeholder="Masukkan password lama"
                                             className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                         />
+
+                                        {passwordForm.errors.current_password && (
+                                            <p className="mt-2 text-sm text-red-500">{passwordForm.errors.current_password}</p>
+                                        )}
                                     </div>
 
                                     <div>
@@ -140,10 +157,16 @@ export default function EmailPassword() {
 
                                         <input
                                             type="password"
-                                            placeholder="Masukkan password baru"
                                             required
+                                            value={passwordForm.data.new_password}
+                                            onChange={(e) => passwordForm.setData('new_password', e.target.value)}
+                                            placeholder="Masukkan password baru"
                                             className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                         />
+
+                                        {passwordForm.errors.new_password && (
+                                            <p className="mt-2 text-sm text-red-500">{passwordForm.errors.new_password}</p>
+                                        )}
                                     </div>
 
                                     <div>
@@ -152,18 +175,55 @@ export default function EmailPassword() {
                                         <input
                                             type="password"
                                             required
+                                            value={passwordForm.data.new_password_confirmation}
+                                            onChange={(e) => passwordForm.setData('new_password_confirmation', e.target.value)}
                                             placeholder="Konfirmasi password baru"
                                             className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                         />
                                     </div>
                                 </div>
 
-                                <button className="mt-5 rounded-md bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800">
-                                    Simpan Password
+                                <button
+                                    type="submit"
+                                    disabled={passwordForm.processing}
+                                    className="mt-5 rounded-md bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                >
+                                    {passwordForm.processing ? 'Menyimpan...' : 'Simpan Password'}
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
+
+                    {showPasswordPopup && (
+                        <div className="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-black/40">
+                            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+                                <h2 className="text-xl font-bold text-gray-800">Konfirmasi Password</h2>
+
+                                <p className="mt-3 text-sm text-gray-500">Apakah Anda yakin ingin mengganti password akun ini?</p>
+
+                                <div className="mt-6 flex justify-end gap-3">
+                                    <button
+                                        onClick={() => {
+                                            setShowPasswordPopup(false);
+
+                                            passwordForm.reset();
+                                        }}
+                                        className="rounded-md border px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                                    >
+                                        Batal
+                                    </button>
+
+                                    <button
+                                        onClick={confirmUpdatePassword}
+                                        disabled={passwordForm.processing}
+                                        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                    >
+                                        {passwordForm.processing ? 'Menyimpan...' : 'Ya, Ganti Password'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </AdminLayout>

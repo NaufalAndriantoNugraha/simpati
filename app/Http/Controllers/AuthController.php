@@ -142,6 +142,26 @@ class AuthController extends Controller
         return back()->with('success', 'Email berhasil diubah');
     }
 
+    function updatePassword(Request $request) {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = User::find(Auth::id());
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors([
+                'current_password' => 'Password lama salah',
+            ]);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Password berhasil diubah');
+    }
+
     function adminLogout(Request $request)
     {
         Auth::logout();

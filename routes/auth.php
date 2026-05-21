@@ -92,4 +92,5 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     });
 
     Route::put('/admin/dashboard/email-password/email', [AuthController::class, 'updateEmail']);
+    Route::put('/admin/dashboard/email-password/password', [AuthController::class, 'updatePassword']);
 });
