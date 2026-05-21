@@ -1,6 +1,7 @@
+import { Button } from '@headlessui/react';
 import { Link } from '@inertiajs/react';
 import { BookOpen, Layers, LogOut, User } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Props {
     children: React.ReactNode;
@@ -14,6 +15,8 @@ const menuItems = [
 ];
 
 export default function AdminLayout({ children, active }: Props) {
+    const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+
     return (
         <div className="flex min-h-screen">
             <aside className="flex w-66 flex-col border-r bg-white">
@@ -43,18 +46,51 @@ export default function AdminLayout({ children, active }: Props) {
 
             <div className="flex flex-1 flex-col bg-gray-50">
                 <header className="flex items-end justify-end border-b bg-white px-8 py-4">
-                    <Link
-                        href="/admin/logout"
-                        method="post"
-                        as="button"
+                    <Button
+                        onClick={() => setShowLogoutPopup(true)}
                         className="flex cursor-pointer items-center gap-2 rounded-md border bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-600"
                     >
                         <LogOut size={16} />
                         Logout
-                    </Link>
+                    </Button>
                 </header>
 
                 <main className="flex-1 p-8">{children}</main>
+            </div>
+
+            {showLogoutPopup && <LogoutPopUp onClose={() => setShowLogoutPopup(false)} />}
+        </div>
+    );
+}
+
+interface LogoutPopupProps {
+    onClose: () => void;
+}
+
+function LogoutPopUp({ onClose }: LogoutPopupProps) {
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+            <div className="w-[350px] rounded-xl bg-white p-6 shadow-lg">
+                <h1 className="mb-4 text-lg font-semibold">Apakah Anda yakin ingin keluar?</h1>
+
+                <p className="mb-6 text-sm text-gray-600">
+                    Anda akan keluar dari akun admin. Dan Anda perlu melakukan login kembali untuk mengakses dashboard.
+                </p>
+
+                <div className="flex gap-3">
+                    <button onClick={onClose} className="w-full cursor-pointer rounded-md bg-gray-200 px-4 py-2 text-sm hover:bg-gray-300">
+                        Batal
+                    </button>
+
+                    <Link
+                        href="/admin/logout"
+                        method="post"
+                        as="button"
+                        className="w-full cursor-pointer rounded-md bg-red-500 px-4 py-2 text-sm text-white hover:bg-red-600"
+                    >
+                        Iya
+                    </Link>
+                </div>
             </div>
         </div>
     );
