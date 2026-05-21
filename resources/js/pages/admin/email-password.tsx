@@ -1,16 +1,39 @@
 import AdminLayout from '@/layouts/admin/admin-layout';
 import { useForm } from '@inertiajs/react';
 import { Mail, RectangleEllipsis } from 'lucide-react';
+import { useState } from 'react';
 
 export default function EmailPassword() {
-    const { data, setData, put, processing, errors } = useForm({
+    const [showEmailPopup, setShowEmailPopup] = useState(false);
+
+    const emailForm = useForm({
         email: '',
     });
 
+    // const passwordForm = useForm({
+    //     current_password: '',
+    //     new_password: '',
+    //     new_password_confirmation: '',
+    // });
+
     const submitEmail = (e: React.FormEvent) => {
         e.preventDefault();
-        put('/admin/dashboard/email-password/email');
+        setShowEmailPopup(true);
     };
+
+    const confirmUpdateEmail = () => {
+        emailForm.put('/admin/dashboard/email-password/email', {
+            onSuccess: () => {
+                setShowEmailPopup(false);
+            },
+        });
+        emailForm.setData('email', '');
+    };
+
+    // const submitPassword = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     passwordForm.put('/admin/dashboard/email-password/password');
+    // };
 
     return (
         <AdminLayout active="email-password">
@@ -39,25 +62,55 @@ export default function EmailPassword() {
                                     <input
                                         type="email"
                                         required
-                                        value={data.email}
-                                        onChange={(e) => setData('email', e.target.value)}
+                                        value={emailForm.data.email}
+                                        onChange={(e) => emailForm.setData('email', e.target.value)}
                                         placeholder="Masukkan email baru"
                                         className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                     />
 
-                                    {errors.email && <p className="mt-2 text-sm text-red-500">{errors.email}</p>}
+                                    {emailForm.errors.email && <p className="mt-2 text-sm text-red-500">{emailForm.errors.email}</p>}
                                 </div>
 
                                 <button
                                     type="submit"
-                                    disabled={processing}
+                                    disabled={emailForm.processing}
                                     className="mt-5 rounded-md bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
                                 >
-                                    {processing ? 'Menyimpan...' : 'Simpan Email'}
+                                    {emailForm.processing ? 'Menyimpan...' : 'Simpan Email'}
                                 </button>
                             </div>
                         </div>
                     </form>
+
+                    {showEmailPopup && (
+                        <div className="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-black/40">
+                            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+                                <h2 className="text-xl font-bold text-gray-800">Konfirmasi Perubahan</h2>
+
+                                <p className="mt-3 text-sm text-gray-500">Apakah Anda yakin ingin mengganti email akun ini?</p>
+
+                                <div className="mt-6 flex justify-end gap-3">
+                                    <button
+                                        onClick={() => {
+                                            setShowEmailPopup(false);
+                                            emailForm.setData('email', '');
+                                        }}
+                                        className="rounded-md border px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                                    >
+                                        Batal
+                                    </button>
+
+                                    <button
+                                        onClick={confirmUpdateEmail}
+                                        disabled={emailForm.processing}
+                                        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                    >
+                                        {emailForm.processing ? 'Menyimpan...' : 'Ya, Ganti Email'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="rounded-md border bg-white p-6 shadow-sm transition hover:shadow-md">
                         <div className="flex items-start gap-4">
