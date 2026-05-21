@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudyProgramController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsStudent;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -65,7 +66,14 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
     });
 
     Route::get('admin/dashboard/profile', function () {
-        return Inertia::render('admin/profile');
+        return Inertia::render('admin/profile', [
+            'auth' => [
+                'user' => [
+                    'username' => Auth::user()->username,
+                    'email' => Auth::user()->email,
+                ]
+            ]
+        ]);
     });
 
     Route::post('admin/logout', [AuthController::class, 'adminLogout']);
@@ -77,5 +85,9 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
 
     Route::get('/admin/dashboard/contact', function () {
         return Inertia::render('admin/contact');
+    });
+
+    Route::get('/admin/dashboard/email-password', function () {
+        return Inertia::render('admin/email-password');
     });
 });

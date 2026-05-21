@@ -1,17 +1,18 @@
 import { Button } from '@headlessui/react';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Layers, LogOut, User } from 'lucide-react';
+import { BookOpen, ContactRound, KeyRound, Layers, LogOut, User } from 'lucide-react';
 import React, { useState } from 'react';
 
 interface Props {
     children: React.ReactNode;
-    active: 'profile' | 'study-program' | 'contact';
+    active: 'profile' | 'study-program' | 'contact' | 'email-password';
 }
 
 const menuItems = [
     { key: 'profile', label: 'Profil', href: '/admin/dashboard/profile', icon: <User size={18} /> },
     { key: 'study-program', label: 'Kelola Program', href: '/admin/dashboard/study-program', icon: <BookOpen size={18} /> },
-    { key: 'contact', label: 'Kontak Pengembang', href: '/admin/dashboard/contact', icon: <User size={18} /> },
+    { key: 'contact', label: 'Kontak Pengembang', href: '/admin/dashboard/contact', icon: <ContactRound size={18} /> },
+    { key: 'email-password', label: 'Email dan Password', href: '/admin/dashboard/email-password', icon: <KeyRound size={18} /> },
 ];
 
 export default function AdminLayout({ children, active }: Props) {
