@@ -1,3 +1,5 @@
+import { ArrowLeft } from 'lucide-react';
+
 export default function ForgotPassword() {
     const contacts = [
         { name: 'Ahmad Azmiy Fawwaz', phone: '+62 821-3140-0557', wa: '6282131400557' },
@@ -9,10 +11,10 @@ export default function ForgotPassword() {
 
     return (
         <div className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-md rounded-xl border p-8 shadow-md">
+            <div className="w-full max-w-md border p-8 shadow-md">
                 <div className="mb-6 text-center">
-                    <h1 className="text-2xl font-semibold">Lupa Kata Sandi</h1>
-                    <p className="mt-2 text-center text-sm text-gray-500">
+                    <h1 className="text-justify text-2xl font-semibold">Lupa Kata Sandi</h1>
+                    <p className="mt-2 text-justify text-sm text-gray-500">
                         Silahkan hubungi salah satu admin di bawah ini. Kami siap membantu Anda mendapatkan atau membuat ulang kata sandi.
                     </p>
                 </div>
@@ -21,11 +23,7 @@ export default function ForgotPassword() {
                     <p className="mb-3 text-xs font-semibold tracking-wider text-gray-400 uppercase">Kontak Admin</p>
                     <div className="flex flex-col gap-3">
                         {contacts.map((c) => (
-                            <a
-                                href={`https://wa.me/${c.wa}`}
-                                key={c.name}
-                                className="flex items-center gap-3 rounded-lg border bg-gray-50 px-3 py-2.5"
-                            >
+                            <a href={`https://wa.me/${c.wa}`} key={c.name} className="flex items-center gap-3 border bg-gray-50 px-3 py-2.5">
                                 <div className="flex-1">
                                     <p className="text-sm font-medium">{c.name}</p>
                                     <p className="text-xs text-gray-500">{c.phone}</p>
@@ -35,9 +33,10 @@ export default function ForgotPassword() {
                     </div>
                 </div>
 
-                <div className="mt-5 border-t pt-4 text-center">
-                    <a href="/login" className="text-sm text-gray-500 hover:text-black">
-                        Kembali ke halaman masuk
+                <div className="gap mt-5 border-t pt-4 text-center">
+                    <a href="/login" className="flex items-center gap-2 text-sm text-gray-500 hover:text-black">
+                        <ArrowLeft size={15} />
+                        <span>Kembali ke halaman masuk</span>
                     </a>
                 </div>
             </div>

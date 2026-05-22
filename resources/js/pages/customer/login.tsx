@@ -14,7 +14,7 @@ export default function Login() {
 
     return (
         <div className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-md rounded-xl border p-8 shadow-md">
+            <div className="w-full max-w-md border p-8 shadow-md">
                 <h1 className="mb-6 text-center text-2xl font-semibold">Masuk Akun</h1>
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div>
@@ -27,7 +27,7 @@ export default function Login() {
                             required
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
-                            className="block w-full rounded border px-3 py-2"
+                            className="block w-full border px-3 py-2"
                         />
                         {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                     </div>
@@ -47,7 +47,7 @@ export default function Login() {
                             required
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
-                            className="block w-full rounded border px-3 py-2"
+                            className="block w-full border px-3 py-2"
                         />
                         {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
                     </div>
@@ -55,7 +55,7 @@ export default function Login() {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="mt-2 w-full cursor-pointer rounded bg-black py-2 text-white transition hover:bg-gray-800"
+                        className="mt-2 w-full cursor-pointer bg-black py-2 text-white transition hover:bg-gray-800"
                     >
                         {processing ? 'Memproses...' : 'Masuk'}
                     </button>
