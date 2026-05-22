@@ -43,26 +43,26 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
 
     Route::get('student/dashboard/profile', function () {
         return Inertia::render('customer/profile', [
-        'profile' => Auth::user()->studentProfile,
+            'profile' => Auth::user()->studentProfile,
         ]);
     });
 
     Route::get('student/dashboard/programs', function () {
         $programs = \App\Models\StudyProgram::where('status', 'open')
-        ->withCount('registrations')
-        ->get()
-        ->map(function ($program) {
-            $program->remaining_quota = $program->student_quota - $program->registrations_count;
-            return $program;
-        });
+            ->withCount('registrations')
+            ->get()
+            ->map(function ($program) {
+                $program->remaining_quota = $program->student_quota - $program->registrations_count;
+                return $program;
+            });
 
         $registeredProgramIds = \App\Models\Registration::where('student_id', Auth::id())
-        ->pluck('program_id')
-        ->toArray();
+            ->pluck('program_id')
+            ->toArray();
 
         return Inertia::render('customer/study-programs', [
-        'programs' => $programs,
-        'registeredProgramIds' => $registeredProgramIds,
+            'programs' => $programs,
+            'registeredProgramIds' => $registeredProgramIds,
         ]);
     });
 
@@ -85,6 +85,13 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
     Route::get('student/dashboard/contact', function () {
         return Inertia::render('customer/contact');
     });
+
+    Route::get('student/dashboard/email-password', function () {
+        return Inertia::render('customer/email-password');
+    });
+
+    Route::put('student/dashboard/email-password/email', [AuthController::class, 'updateEmail']);
+    Route::put('student/dashboard/email-password/password', [AuthController::class, 'updatePassword']);
 
     Route::post('student/logout', [AuthController::class, 'studentLogout']);
 });
