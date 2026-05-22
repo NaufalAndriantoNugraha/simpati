@@ -48,4 +48,40 @@ class PaymentController extends Controller
 
         return back()->with('success', 'Bukti pembayaran berhasil diupload.');
     }
+
+    function adminIndex()
+    {
+        $payments = Payment::with(['registration.program', 'registration.student.studentProfile'])
+            ->get();
+
+        return Inertia::render('admin/payment', [
+            'payments' => $payments,
+        ]);
+    }
+
+    function verify(Request $request, Payment $payment)
+    {
+        $request->validate([
+            'status' => 'required|in:accepted,rejected',
+        ]);
+
+        $payment->update([
+            'status' => $request->status,
+            'admin_id' => Auth::id(),
+        ]);
+
+        if ($request->status === 'accepted') {
+            $payment->registration->update([
+                'status' => 'accepted',
+                'admin_id' => Auth::id(),
+            ]);
+        } elseif ($request->status === 'rejected') {
+            $payment->registration->update([
+                'status' => 'rejected',
+                'admin_id' => Auth::id(),
+            ]);
+        }
+
+        return back()->with('success', 'Status pembayaran berhasil diperbarui.');
+    }
 }

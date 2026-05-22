@@ -128,6 +128,9 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
         return Inertia::render('admin/contact');
     });
 
+    Route::get('/admin/dashboard/payment', [PaymentController::class, 'adminIndex']);
+    Route::put('/admin/dashboard/payment/{payment}', [PaymentController::class, 'verify']);
+
     Route::get('/admin/dashboard/email-password', function () {
         return Inertia::render('admin/email-password');
     });
