@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Registration extends Model
 {
     protected $fillable = [
-            'student_id',
-            'program_id',
-            'admin_id',
-            'status',
-            'description',
-        ];
+        'student_id',
+        'program_id',
+        'admin_id',
+        'status',
+        'description',
+    ];
 
     public function student(): BelongsTo
     {
@@ -28,5 +28,10 @@ class Registration extends Model
     public function admin(): BelongsTo
     {
         return $this->belongsTo(User::class, 'admin_id');
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 }

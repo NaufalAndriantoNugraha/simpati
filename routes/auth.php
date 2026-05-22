@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\StudyProgramController;
 use App\Http\Middleware\IsAdmin;
@@ -81,6 +82,10 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
     });
 
     Route::post('student/register-program', [RegistrationController::class, 'store']);
+
+    Route::get('student/dashboard/payment', [PaymentController::class, 'index']);
+    Route::post('student/dashboard/payment', [PaymentController::class, 'store']);
+
 
     Route::get('student/dashboard/contact', function () {
         return Inertia::render('customer/contact');
