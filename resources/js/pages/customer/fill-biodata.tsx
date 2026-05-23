@@ -62,7 +62,7 @@ export default function FillBiodata() {
 
     return (
         <div className="flex min-h-screen items-center justify-center py-10">
-            <div className="w-full max-w-2xl rounded-xl border p-8 shadow-md">
+            <div className="w-full max-w-2xl border p-8 shadow-md">
                 <h1 className="mb-6 text-center text-2xl font-semibold">Isi Biodata Anda</h1>
                 <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                     <div>
@@ -74,13 +74,13 @@ export default function FillBiodata() {
                             value={data.full_name}
                             onChange={(e) => setData('full_name', e.target.value)}
                             placeholder="Masukkan nama lengkap Anda"
-                            className="block w-full rounded border px-3 py-2 text-sm"
+                            className="block w-full border px-3 py-2 text-sm"
                         />
                         {errors.full_name && <p className="mt-1 text-xs text-red-500">{errors.full_name}</p>}
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
-                        <label className="flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 text-sm has-[:checked]:border-black has-[:checked]:bg-gray-100">
+                        <label className="flex cursor-pointer items-center gap-2 border px-4 py-2 text-sm has-[:checked]:border-black has-[:checked]:bg-gray-100">
                             <input
                                 type="radio"
                                 name="gender"
@@ -91,7 +91,7 @@ export default function FillBiodata() {
                             />
                             Laki-laki
                         </label>
-                        <label className="flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 text-sm has-[:checked]:border-black has-[:checked]:bg-gray-100">
+                        <label className="flex cursor-pointer items-center gap-2 border px-4 py-2 text-sm has-[:checked]:border-black has-[:checked]:bg-gray-100">
                             <input
                                 type="radio"
                                 name="gender"
@@ -114,7 +114,7 @@ export default function FillBiodata() {
                                 type="date"
                                 value={data.birth_date}
                                 onChange={(e) => setData('birth_date', e.target.value)}
-                                className="block w-full rounded border px-3 py-2 text-sm"
+                                className="block w-full border px-3 py-2 text-sm"
                             />
                             {errors.birth_date && <p className="mt-1 text-xs text-red-500">{errors.birth_date}</p>}
                         </div>
@@ -127,7 +127,7 @@ export default function FillBiodata() {
                                 value={data.birth_place}
                                 onChange={(e) => setData('birth_place', e.target.value)}
                                 placeholder="Contoh: Surabaya"
-                                className="block w-full rounded border px-3 py-2 text-sm"
+                                className="block w-full border px-3 py-2 text-sm"
                             />
                             {errors.birth_place && <p className="mt-1 text-xs text-red-500">{errors.birth_place}</p>}
                         </div>
@@ -142,7 +142,7 @@ export default function FillBiodata() {
                             onChange={(e) => setData('address', e.target.value)}
                             placeholder="Masukkan alamat lengkap Anda"
                             rows={3}
-                            className="block w-full rounded border px-3 py-2 text-sm"
+                            className="block w-full border px-3 py-2 text-sm"
                         />
                         {errors.address && <p className="mt-1 text-xs text-red-500">{errors.address}</p>}
                     </div>
@@ -157,7 +157,7 @@ export default function FillBiodata() {
                                 value={data.city}
                                 onChange={(e) => setData('city', e.target.value)}
                                 placeholder="Masukkan kota/kabupaten"
-                                className="block w-full rounded border px-3 py-2 text-sm"
+                                className="block w-full border px-3 py-2 text-sm"
                             />
                             {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city}</p>}
                         </div>
@@ -168,7 +168,7 @@ export default function FillBiodata() {
                             <select
                                 value={data.province}
                                 onChange={(e) => setData('province', e.target.value)}
-                                className="block w-full rounded border px-3 py-2 text-sm"
+                                className="block w-full border px-3 py-2 text-sm"
                             >
                                 <option value="">Pilih Provinsi</option>
                                 {provinsi.map((p) => (
@@ -190,7 +190,7 @@ export default function FillBiodata() {
                             value={data.phone_number}
                             onChange={(e) => setData('phone_number', e.target.value)}
                             placeholder="+62 89130050790"
-                            className="block w-full rounded border px-3 py-2 text-sm"
+                            className="block w-full border px-3 py-2 text-sm"
                         />
                         {errors.phone_number && <p className="mt-1 text-xs text-red-500">{errors.phone_number}</p>}
                     </div>
@@ -204,7 +204,7 @@ export default function FillBiodata() {
                             value={data.institution_name}
                             onChange={(e) => setData('institution_name', e.target.value)}
                             placeholder="Contoh: Universitas Negeri Surabaya"
-                            className="block w-full rounded border px-3 py-2 text-sm"
+                            className="block w-full border px-3 py-2 text-sm"
                         />
                         {errors.institution_name && <p className="mt-1 text-xs text-red-500">{errors.institution_name}</p>}
                     </div>
@@ -219,7 +219,7 @@ export default function FillBiodata() {
                                 value={data.major}
                                 onChange={(e) => setData('major', e.target.value)}
                                 placeholder="Contoh: Teknik Informatika"
-                                className="block w-full rounded border px-3 py-2 text-sm"
+                                className="block w-full border px-3 py-2 text-sm"
                             />
                             {errors.major && <p className="mt-1 text-xs text-red-500">{errors.major}</p>}
                         </div>
@@ -230,7 +230,7 @@ export default function FillBiodata() {
                             <select
                                 value={data.semester}
                                 onChange={(e) => setData('semester', e.target.value)}
-                                className="block w-full rounded border px-3 py-2 text-sm"
+                                className="block w-full border px-3 py-2 text-sm"
                             >
                                 <option value="">Pilih Semester</option>
                                 {semester.map((s) => (
@@ -246,7 +246,7 @@ export default function FillBiodata() {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="mt-2 w-full cursor-pointer rounded bg-black py-2 text-sm text-white transition hover:bg-gray-800 disabled:opacity-50"
+                        className="mt-2 w-full cursor-pointer bg-black py-2 text-sm text-white transition hover:bg-gray-800 disabled:opacity-50"
                     >
                         {processing ? 'Menyimpan...' : 'Simpan'}
                     </button>

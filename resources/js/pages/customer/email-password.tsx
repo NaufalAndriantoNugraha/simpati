@@ -56,9 +56,9 @@ export default function EmailPassword() {
                 </div>
 
                 <div className="space-y-5">
-                    <form onSubmit={submitEmail} className="rounded-md border bg-white p-6 shadow-sm">
+                    <form onSubmit={submitEmail} className="border bg-white p-6 shadow-sm">
                         <div className="flex items-start gap-4">
-                            <div className="rounded-md bg-blue-100 p-3 text-blue-600">
+                            <div className="bg-blue-100 p-3 text-blue-600">
                                 <Mail size={22} />
                             </div>
 
@@ -76,7 +76,7 @@ export default function EmailPassword() {
                                         value={emailForm.data.email}
                                         onChange={(e) => emailForm.setData('email', e.target.value)}
                                         placeholder="Masukkan email baru"
-                                        className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
+                                        className="w-full border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                     />
 
                                     {emailForm.errors.email && <p className="mt-2 text-sm text-red-500">{emailForm.errors.email}</p>}
@@ -85,7 +85,7 @@ export default function EmailPassword() {
                                 <button
                                     type="submit"
                                     disabled={emailForm.processing}
-                                    className="mt-5 rounded-md bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                    className="mt-5 bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
                                 >
                                     {emailForm.processing ? 'Menyimpan...' : 'Simpan Email'}
                                 </button>
@@ -95,7 +95,7 @@ export default function EmailPassword() {
 
                     {showEmailPopup && (
                         <div className="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-black/40">
-                            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+                            <div className="w-full max-w-md bg-white p-6 shadow-xl">
                                 <h2 className="text-xl font-bold text-gray-800">Konfirmasi Perubahan</h2>
 
                                 <p className="mt-3 text-sm text-gray-500">Apakah Anda yakin ingin mengganti email akun ini?</p>
@@ -106,7 +106,7 @@ export default function EmailPassword() {
                                             setShowEmailPopup(false);
                                             emailForm.setData('email', '');
                                         }}
-                                        className="rounded-md border px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                                        className="border px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
                                     >
                                         Batal
                                     </button>
@@ -114,7 +114,7 @@ export default function EmailPassword() {
                                     <button
                                         onClick={confirmUpdateEmail}
                                         disabled={emailForm.processing}
-                                        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                        className="bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
                                     >
                                         {emailForm.processing ? 'Menyimpan...' : 'Ya, Ganti Email'}
                                     </button>
@@ -123,9 +123,9 @@ export default function EmailPassword() {
                         </div>
                     )}
 
-                    <form onSubmit={submitPassword} className="rounded-md border bg-white p-6 shadow-sm transition hover:shadow-md">
+                    <form onSubmit={submitPassword} className="border bg-white p-6 shadow-sm transition hover:shadow-md">
                         <div className="flex items-start gap-4">
-                            <div className="rounded-md bg-red-100 p-3 text-red-600">
+                            <div className="bg-red-100 p-3 text-red-600">
                                 <RectangleEllipsis size={22} />
                             </div>
 
@@ -144,7 +144,7 @@ export default function EmailPassword() {
                                             value={passwordForm.data.current_password}
                                             onChange={(e) => passwordForm.setData('current_password', e.target.value)}
                                             placeholder="Masukkan password lama"
-                                            className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
+                                            className="w-full border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                         />
 
                                         {passwordForm.errors.current_password && (
@@ -161,7 +161,7 @@ export default function EmailPassword() {
                                             value={passwordForm.data.new_password}
                                             onChange={(e) => passwordForm.setData('new_password', e.target.value)}
                                             placeholder="Masukkan password baru"
-                                            className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
+                                            className="w-full border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                         />
 
                                         {passwordForm.errors.new_password && (
@@ -178,7 +178,7 @@ export default function EmailPassword() {
                                             value={passwordForm.data.new_password_confirmation}
                                             onChange={(e) => passwordForm.setData('new_password_confirmation', e.target.value)}
                                             placeholder="Konfirmasi password baru"
-                                            className="w-full rounded-md border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
+                                            className="w-full border border-gray-300 px-4 py-3 transition outline-none focus:border-black"
                                         />
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@ export default function EmailPassword() {
                                 <button
                                     type="submit"
                                     disabled={passwordForm.processing}
-                                    className="mt-5 rounded-md bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                    className="mt-5 bg-black px-5 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
                                 >
                                     {passwordForm.processing ? 'Menyimpan...' : 'Simpan Password'}
                                 </button>
@@ -196,7 +196,7 @@ export default function EmailPassword() {
 
                     {showPasswordPopup && (
                         <div className="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-black/40">
-                            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
+                            <div className="w-full max-w-md bg-white p-6 shadow-xl">
                                 <h2 className="text-xl font-bold text-gray-800">Konfirmasi Password</h2>
 
                                 <p className="mt-3 text-sm text-gray-500">Apakah Anda yakin ingin mengganti password akun ini?</p>
@@ -208,7 +208,7 @@ export default function EmailPassword() {
 
                                             passwordForm.reset();
                                         }}
-                                        className="rounded-md border px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                                        className="border px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
                                     >
                                         Batal
                                     </button>
@@ -216,7 +216,7 @@ export default function EmailPassword() {
                                     <button
                                         onClick={confirmUpdatePassword}
                                         disabled={passwordForm.processing}
-                                        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
+                                        className="bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-800 disabled:opacity-50"
                                     >
                                         {passwordForm.processing ? 'Menyimpan...' : 'Ya, Ganti Password'}
                                     </button>

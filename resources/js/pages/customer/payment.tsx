@@ -39,11 +39,11 @@ function UploadModal({ registration, onClose }: { registration: Registration; on
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+            <div className="w-full max-w-md bg-white p-6 shadow-xl">
                 <h2 className="mb-2 text-lg font-bold">Upload Bukti Pembayaran</h2>
                 <p className="mb-4 text-sm text-gray-500">{registration.program.name}</p>
 
-                <div className="mb-4 rounded-lg border p-4 text-sm">
+                <div className="mb-4 border p-4 text-sm">
                     <div className="flex justify-between">
                         <span className="text-gray-400">Total Pembayaran</span>
                         <span className="font-semibold">Rp {Number(registration.program.price).toLocaleString('id-ID')}</span>
@@ -57,7 +57,7 @@ function UploadModal({ registration, onClose }: { registration: Registration; on
                             type="file"
                             accept=".jpg,.jpeg,.png,.pdf"
                             onChange={(e) => setData('file', e.target.files?.[0] || null)}
-                            className="block w-full rounded border px-3 py-2 text-sm"
+                            className="block w-full border px-3 py-2 text-sm"
                         />
                         <p className="mt-1 text-xs text-gray-400">Format: JPG, PNG, PDF. Maks 2MB.</p>
                         {errors.file && <p className="mt-1 text-xs text-red-500">{errors.file}</p>}
@@ -68,14 +68,14 @@ function UploadModal({ registration, onClose }: { registration: Registration; on
                             type="button"
                             onClick={onClose}
                             disabled={processing}
-                            className="flex-1 rounded-md border py-2 text-sm font-semibold hover:bg-gray-100 disabled:opacity-50"
+                            className="flex-1 border py-2 text-sm font-semibold hover:bg-gray-100 disabled:opacity-50"
                         >
                             Batal
                         </button>
                         <button
                             type="submit"
                             disabled={processing}
-                            className="flex-1 rounded-md bg-black py-2 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50"
+                            className="flex-1 bg-black py-2 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50"
                         >
                             {processing ? 'Mengupload...' : 'Upload'}
                         </button>
@@ -99,7 +99,7 @@ function StatusBadge({ status }: { status: 'pending' | 'accepted' | 'rejected' }
         rejected: 'Ditolak',
     };
 
-    return <span className={'rounded-full px-2 py-0.5 text-xs font-semibold ' + styles[status]}>{labels[status]}</span>;
+    return <span className={'px-2 py-0.5 text-xs font-semibold ' + styles[status]}>{labels[status]}</span>;
 }
 
 export default function Payment() {
@@ -120,7 +120,7 @@ export default function Payment() {
                     <p className="text-gray-400">Anda belum mendaftar ke program apapun.</p>
                 ) : (
                     registrations.map((registration) => (
-                        <div key={registration.id} className="rounded-md border bg-white p-6 shadow-sm">
+                        <div key={registration.id} className="border bg-white p-6 shadow-sm">
                             <div className="flex items-start justify-between">
                                 <div>
                                     <h2 className="font-bold">{registration.program.name}</h2>
@@ -144,7 +144,7 @@ export default function Payment() {
                                     <p className="text-sm text-gray-500">Belum upload bukti pembayaran</p>
                                     <button
                                         onClick={() => setSelectedRegistration(registration)}
-                                        className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800"
+                                        className="bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800"
                                     >
                                         Upload Bukti
                                     </button>
