@@ -15,7 +15,7 @@ export default function Register() {
 
     return (
         <div className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-md rounded-xl border p-8 shadow-md">
+            <div className="w-full max-w-md border p-8 shadow-md">
                 <h1 className="mb-6 text-center text-2xl font-semibold">Registrasi Akun Admin</h1>
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div>
@@ -31,7 +31,7 @@ export default function Register() {
                             max={30}
                             value={data.username}
                             onChange={(event) => setData('username', event.target.value)}
-                            className="block w-full rounded border px-3 py-2"
+                            className="block w-full border px-3 py-2"
                         />
                         {errors.username && <p className="mt-1 text-sm text-red-500">{errors.username}</p>}
                     </div>
@@ -47,7 +47,7 @@ export default function Register() {
                             required
                             value={data.email}
                             onChange={(event) => setData('email', event.target.value)}
-                            className="block w-full rounded border px-3 py-2"
+                            className="block w-full border px-3 py-2"
                         />
                         {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                     </div>
@@ -65,7 +65,7 @@ export default function Register() {
                             max={30}
                             value={data.password}
                             onChange={(event) => setData('password', event.target.value)}
-                            className="block w-full rounded border px-3 py-2"
+                            className="block w-full border px-3 py-2"
                         />
                         {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
                     </div>
@@ -73,7 +73,7 @@ export default function Register() {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="mt-2 w-full cursor-pointer rounded bg-black py-2 text-white transition hover:bg-gray-800"
+                        className="mt-2 w-full cursor-pointer bg-black py-2 text-white transition hover:bg-gray-800"
                     >
                         {processing ? 'Memproses' : 'Daftar'}
                     </button>
