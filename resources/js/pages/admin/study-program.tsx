@@ -92,16 +92,13 @@ export default function StudyProgram({ programs }: Props) {
                     <h1 className="text-2xl font-bold">Kelola Program</h1>
                     <p className="text-gray-500">Kelola program studi independen</p>
                 </div>
-                <button
-                    onClick={handleAdd}
-                    className="cursor-pointer rounded-md bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800"
-                >
+                <button onClick={handleAdd} className="cursor-pointer bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800">
                     Tambah Program
                 </button>
             </div>
 
             {showForm && (
-                <div className="mb-6 rounded-md border bg-white p-6 shadow-sm">
+                <div className="mb-6 border bg-white p-6 shadow-sm">
                     <h2 className="mb-4 font-bold">{editingProgram ? 'Edit Program' : 'Tambah Program'}</h2>
                     <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
                         <div>
@@ -110,7 +107,7 @@ export default function StudyProgram({ programs }: Props) {
                                 type="text"
                                 value={data.name}
                                 onChange={(e) => setData('name', e.target.value)}
-                                className="w-full rounded border px-3 py-2 text-sm"
+                                className="w-full border px-3 py-2 text-sm"
                             />
                             {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
                         </div>
@@ -121,7 +118,7 @@ export default function StudyProgram({ programs }: Props) {
                                 type="number"
                                 value={data.student_quota}
                                 onChange={(e) => setData('student_quota', e.target.value)}
-                                className="w-full rounded border px-3 py-2 text-sm"
+                                className="w-full border px-3 py-2 text-sm"
                             />
                             {errors.student_quota && <p className="mt-1 text-xs text-red-500">{errors.student_quota}</p>}
                         </div>
@@ -132,7 +129,7 @@ export default function StudyProgram({ programs }: Props) {
                                 value={data.description}
                                 onChange={(e) => setData('description', e.target.value)}
                                 rows={3}
-                                className="w-full rounded border px-3 py-2 text-sm"
+                                className="w-full border px-3 py-2 text-sm"
                             />
                             {errors.description && <p className="mt-1 text-xs text-red-500">{errors.description}</p>}
                         </div>
@@ -143,7 +140,7 @@ export default function StudyProgram({ programs }: Props) {
                                 type="number"
                                 value={data.price}
                                 onChange={(e) => setData('price', e.target.value)}
-                                className="w-full rounded border px-3 py-2 text-sm"
+                                className="w-full border px-3 py-2 text-sm"
                             />
                             {errors.price && <p className="mt-1 text-xs text-red-500">{errors.price}</p>}
                         </div>
@@ -153,7 +150,7 @@ export default function StudyProgram({ programs }: Props) {
                             <select
                                 value={data.status}
                                 onChange={(e) => setData('status', e.target.value)}
-                                className="w-full rounded border px-3 py-2 text-sm"
+                                className="w-full border px-3 py-2 text-sm"
                             >
                                 <option value="draft">Draft</option>
                                 <option value="open">Open</option>
@@ -168,7 +165,7 @@ export default function StudyProgram({ programs }: Props) {
                                 type="date"
                                 value={data.registration_open}
                                 onChange={(e) => setData('registration_open', e.target.value)}
-                                className="w-full rounded border px-3 py-2 text-sm"
+                                className="w-full border px-3 py-2 text-sm"
                             />
                             {errors.registration_open && <p className="mt-1 text-xs text-red-500">{errors.registration_open}</p>}
                         </div>
@@ -179,7 +176,7 @@ export default function StudyProgram({ programs }: Props) {
                                 type="date"
                                 value={data.registration_close}
                                 onChange={(e) => setData('registration_close', e.target.value)}
-                                className="w-full rounded border px-3 py-2 text-sm"
+                                className="w-full border px-3 py-2 text-sm"
                             />
                             {errors.registration_close && <p className="mt-1 text-xs text-red-500">{errors.registration_close}</p>}
                         </div>
@@ -188,14 +185,14 @@ export default function StudyProgram({ programs }: Props) {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50"
+                                className="bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50"
                             >
                                 {processing ? 'Menyimpan...' : 'Simpan'}
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setShowForm(false)}
-                                className="rounded-md border px-4 py-2 text-sm font-semibold hover:bg-gray-100"
+                                className="border px-4 py-2 text-sm font-semibold hover:bg-gray-100"
                             >
                                 Batal
                             </button>
@@ -204,7 +201,7 @@ export default function StudyProgram({ programs }: Props) {
                 </div>
             )}
 
-            <div className="rounded-md border bg-white shadow-sm">
+            <div className="border bg-white shadow-sm">
                 <table className="w-full text-sm">
                     <thead className="border-b">
                         <tr>
@@ -233,9 +230,7 @@ export default function StudyProgram({ programs }: Props) {
                                         {program.registration_open} s/d {program.registration_close}
                                     </td>
                                     <td className="px-6 py-4 text-center">
-                                        <span className={`rounded-md px-2 py-0.5 text-xs font-semibold ${program.status === 'open'}`}>
-                                            {program.status}
-                                        </span>
+                                        <span className={`px-2 py-0.5 text-xs font-semibold ${program.status === 'open'}`}>{program.status}</span>
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         <div className="flex justify-center gap-2">

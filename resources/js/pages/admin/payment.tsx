@@ -48,7 +48,7 @@ function StatusBadge({ status }: { status: 'pending' | 'accepted' | 'rejected' }
         rejected: 'Ditolak',
     };
 
-    return <span className={'rounded-md px-2 py-0.5 text-xs font-semibold ' + styles[status]}>{labels[status]}</span>;
+    return <span className={'px-2 py-0.5 text-xs font-semibold ' + styles[status]}>{labels[status]}</span>;
 }
 
 function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => void }) {
@@ -71,7 +71,7 @@ function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => vo
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+            <div className="w-full max-w-md bg-white p-6 shadow-xl">
                 <h2 className="mb-2 text-lg font-bold">Verifikasi Pembayaran</h2>
 
                 <div className="mb-4">
@@ -100,7 +100,7 @@ function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => vo
                     <button
                         onClick={onClose}
                         disabled={processing}
-                        className="flex-1 rounded-md border py-2 text-sm font-semibold hover:bg-gray-100 disabled:opacity-50"
+                        className="flex-1 border py-2 text-sm font-semibold hover:bg-gray-100 disabled:opacity-50"
                     >
                         Batal
                     </button>
@@ -108,7 +108,7 @@ function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => vo
                     <button
                         onClick={handleReject}
                         disabled={processing}
-                        className="flex-1 rounded-md border border-red-500 py-2 text-sm font-semibold text-red-500 hover:bg-red-50 disabled:opacity-50"
+                        className="flex-1 border border-red-500 py-2 text-sm font-semibold text-red-500 hover:bg-red-50 disabled:opacity-50"
                     >
                         Tolak
                     </button>
@@ -116,7 +116,7 @@ function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => vo
                     <button
                         onClick={handleAccept}
                         disabled={processing}
-                        className="flex-1 rounded-md bg-black py-2 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50"
+                        className="flex-1 bg-black py-2 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50"
                     >
                         {processing ? 'Memproses...' : 'Terima'}
                     </button>
@@ -152,11 +152,11 @@ export default function Payment() {
                     placeholder="Cari mahasiswa atau program..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full rounded-md border bg-white px-4 py-3 text-sm focus:outline-none"
+                    className="w-full border bg-white px-4 py-3 text-sm focus:outline-none"
                 />
             </div>
 
-            <div className="overflow-x-auto rounded-md border bg-white shadow-sm">
+            <div className="overflow-x-auto border bg-white shadow-sm">
                 <table className="w-full text-sm">
                     <thead className="border-b bg-gray-50">
                         <tr>
