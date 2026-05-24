@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LoaController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\StudyProgramController;
@@ -98,6 +99,8 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
     Route::put('student/dashboard/email-password/email', [AuthController::class, 'updateEmail']);
     Route::put('student/dashboard/email-password/password', [AuthController::class, 'updatePassword']);
 
+    Route::get('student/dashboard/loa', [LoaController::class, 'studentIndex']);
+
     Route::post('student/logout', [AuthController::class, 'studentLogout']);
 });
 
@@ -137,4 +140,8 @@ Route::middleware(['auth', IsAdmin::class])->group(function () {
 
     Route::put('/admin/dashboard/email-password/email', [AuthController::class, 'updateEmail']);
     Route::put('/admin/dashboard/email-password/password', [AuthController::class, 'updatePassword']);
+
+    Route::get('/admin/dashboard/loa', [LoaController::class, 'adminIndex']);
+    Route::post('/admin/dashboard/loa', [LoaController::class, 'store']);
+    Route::delete('/admin/dashboard/loa/{loa}', [LoaController::class, 'destroy']);
 });

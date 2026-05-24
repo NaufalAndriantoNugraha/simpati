@@ -34,4 +34,9 @@ class Registration extends Model
     {
         return $this->hasOne(Payment::class);
     }
+
+    public function loa()
+    {
+        return $this->hasOne(Loa::class);
+    }
 }
