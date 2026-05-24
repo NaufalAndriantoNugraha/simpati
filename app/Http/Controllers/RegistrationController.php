@@ -38,4 +38,19 @@ class RegistrationController extends Controller
 
         return back()->with('success', 'Pendaftaran berhasil!');
     }
+
+    function destroy(Registration $registration)
+    {
+        if ($registration->student_id !== Auth::id()) {
+            return back()->withErrors(['error' => 'Tidak diizinkan.']);
+        }
+
+        if ($registration->status === 'accepted') {
+            return back()->withErrors(['error' => 'Pendaftaran yang sudah diterima tidak bisa dibatalkan.']);
+        }
+
+        $registration->delete();
+
+        return back()->with('success', 'Pendaftaran berhasil dibatalkan.');
+    }
 }

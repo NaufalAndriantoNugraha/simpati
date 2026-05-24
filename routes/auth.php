@@ -113,6 +113,7 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
     Route::get('student/dashboard/loa', [LoaController::class, 'studentIndex']);
 
     Route::post('student/logout', [AuthController::class, 'studentLogout']);
+    Route::delete('student/register-program/{registration}', [RegistrationController::class, 'destroy']);
 });
 
 Route::middleware(['auth', IsAdmin::class])->group(function () {

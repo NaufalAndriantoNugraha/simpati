@@ -86,6 +86,49 @@ function UploadModal({ registration, onClose }: { registration: Registration; on
     );
 }
 
+function CancelModal({
+    registration,
+    onConfirm,
+    onClose,
+    processing,
+}: {
+    registration: Registration;
+    onConfirm: () => void;
+    onClose: () => void;
+    processing: boolean;
+}) {
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+            <div className="w-full max-w-md bg-white p-6 shadow-xl">
+                <h2 className="mb-2 text-lg font-bold">Batalkan Pendaftaran</h2>
+                <p className="mb-1 text-sm text-gray-500">Anda akan membatalkan pendaftaran ke program:</p>
+                <p className="mb-6 font-semibold">{registration.program.name}</p>
+
+                <p className="mb-6 text-sm text-red-500">
+                    Tindakan ini tidak dapat dibatalkan. Anda harus mendaftar ulang jika ingin bergabung kembali.
+                </p>
+
+                <div className="flex gap-3">
+                    <button
+                        onClick={onClose}
+                        disabled={processing}
+                        className="flex-1 border py-2 text-sm font-semibold hover:bg-gray-100 disabled:opacity-50"
+                    >
+                        Kembali
+                    </button>
+                    <button
+                        onClick={onConfirm}
+                        disabled={processing}
+                        className="flex-1 border border-red-500 py-2 text-sm font-semibold text-red-500 hover:bg-red-50 disabled:opacity-50"
+                    >
+                        {processing ? 'Membatalkan...' : 'Ya, Batalkan'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function StatusBadge({ status }: { status: 'pending' | 'accepted' | 'rejected' }) {
     const styles = {
         pending: 'bg-yellow-100 text-yellow-700',
@@ -105,10 +148,27 @@ function StatusBadge({ status }: { status: 'pending' | 'accepted' | 'rejected' }
 export default function Payment() {
     const { registrations } = usePage<PageProps>().props;
     const [selectedRegistration, setSelectedRegistration] = useState<Registration | null>(null);
+    const [cancelRegistration, setCancelRegistration] = useState<Registration | null>(null);
+    const { delete: destroy, processing: cancelling } = useForm({});
+
+    function handleCancel(registration: Registration) {
+        destroy('/student/register-program/' + registration.id, {
+            onSuccess: () => setCancelRegistration(null),
+        });
+    }
 
     return (
         <StudentLayout active="payment">
             {selectedRegistration && <UploadModal registration={selectedRegistration} onClose={() => setSelectedRegistration(null)} />}
+
+            {cancelRegistration && (
+                <CancelModal
+                    registration={cancelRegistration}
+                    onConfirm={() => handleCancel(cancelRegistration)}
+                    onClose={() => setCancelRegistration(null)}
+                    processing={cancelling}
+                />
+            )}
 
             <div className="mb-6">
                 <h1 className="text-2xl font-bold">Pembayaran</h1>
@@ -153,6 +213,15 @@ export default function Payment() {
                                         {registration.payment?.status === 'rejected' ? 'Upload Ulang' : 'Upload Bukti'}
                                     </button>
                                 </div>
+                            )}
+
+                            {registration.status !== 'accepted' && (
+                                <button
+                                    onClick={() => setCancelRegistration(registration)}
+                                    className="mt-4 w-full border border-red-500 py-2 text-sm font-semibold text-red-500 hover:bg-red-50"
+                                >
+                                    Batalkan Pendaftaran
+                                </button>
                             )}
                         </div>
                     ))
