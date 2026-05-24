@@ -21,6 +21,7 @@ class RegistrationController extends Controller
 
         $alreadyRegistered = Registration::where('student_id', Auth::id())
             ->where('program_id', $request->program_id)
+            ->whereIn('status', ['pending', 'accepted'])
             ->exists();
 
         if ($alreadyRegistered) {

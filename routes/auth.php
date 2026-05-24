@@ -51,7 +51,11 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
 
     Route::get('student/dashboard/programs', function () {
         $programs = \App\Models\StudyProgram::where('status', 'open')
-            ->withCount('registrations')
+            ->withCount([
+                'registrations' => function ($query) {
+                    $query->where('status', '!=', 'rejected');
+                }
+            ])
             ->get()
             ->map(function ($program) {
                 $program->remaining_quota = $program->student_quota - $program->registrations_count;
@@ -59,6 +63,7 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
             });
 
         $registeredProgramIds = \App\Models\Registration::where('student_id', Auth::id())
+            ->whereIn('status', ['pending', 'accepted'])
             ->pluck('program_id')
             ->toArray();
 
@@ -69,11 +74,17 @@ Route::middleware(['auth', IsStudent::class])->group(function () {
     });
 
     Route::get('student/dashboard/programs/{id}', function ($id) {
-        $program = \App\Models\StudyProgram::withCount('registrations')->findOrFail($id);
+        $program = \App\Models\StudyProgram::withCount([
+            'registrations' => function ($query) {
+                $query->where('status', '!=', 'rejected');
+            }
+        ])->findOrFail($id);
+
         $program->remaining_quota = $program->student_quota - $program->registrations_count;
 
         $isRegistered = \App\Models\Registration::where('student_id', Auth::id())
             ->where('program_id', $id)
+            ->whereIn('status', ['pending', 'accepted'])
             ->exists();
 
         return Inertia::render('customer/program-detail', [

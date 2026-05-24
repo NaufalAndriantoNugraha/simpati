@@ -131,7 +131,7 @@ export default function Payment() {
 
                             <hr className="my-4" />
 
-                            {registration.payment ? (
+                            {registration.payment && registration.payment.status !== 'rejected' ? (
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <p className="text-sm font-medium">Bukti Pembayaran</p>
@@ -141,12 +141,16 @@ export default function Payment() {
                                 </div>
                             ) : (
                                 <div className="flex items-center justify-between">
-                                    <p className="text-sm text-gray-500">Belum upload bukti pembayaran</p>
+                                    <p className="text-sm text-gray-500">
+                                        {registration.payment?.status === 'rejected'
+                                            ? 'Pembayaran ditolak, silahkan upload ulang'
+                                            : 'Belum upload bukti pembayaran'}
+                                    </p>
                                     <button
                                         onClick={() => setSelectedRegistration(registration)}
                                         className="bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800"
                                     >
-                                        Upload Bukti
+                                        {registration.payment?.status === 'rejected' ? 'Upload Ulang' : 'Upload Bukti'}
                                     </button>
                                 </div>
                             )}

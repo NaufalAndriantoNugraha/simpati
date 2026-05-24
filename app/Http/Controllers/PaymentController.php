@@ -32,19 +32,25 @@ class PaymentController extends Controller
             ->where('student_id', Auth::id())
             ->firstOrFail();
 
+        $path = $request->file('file')->store('payments', 'public');
+
         if ($registration->payment) {
-            return back()->withErrors([
-                'file' => 'Bukti pembayaran sudah pernah diupload.',
+            // Update payment yang sudah ada
+            $registration->payment->update([
+                'file' => $path,
+                'status' => 'pending',
+                'admin_id' => null,
+            ]);
+        } else {
+            Payment::create([
+                'registration_id' => $registration->id,
+                'file' => $path,
+                'status' => 'pending',
             ]);
         }
 
-        $path = $request->file('file')->store('payments', 'public');
-
-        Payment::create([
-            'registration_id' => $registration->id,
-            'file' => $path,
-            'status' => 'pending',
-        ]);
+        // Reset status registrasi ke pending
+        $registration->update(['status' => 'pending']);
 
         return back()->with('success', 'Bukti pembayaran berhasil diupload.');
     }
