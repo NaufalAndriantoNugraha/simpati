@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::middleware('guest')->group(function () {
+    Route::get('landing-page', [AuthController::class,'landingPage']);
+
     // Customer route
     Route::get('register', [AuthController::class, 'customerRegisterView']);
     Route::post('register', [AuthController::class, 'customerRegister']);

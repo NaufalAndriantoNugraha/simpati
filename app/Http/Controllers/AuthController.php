@@ -12,6 +12,10 @@ use Inertia\Inertia;
 
 class AuthController extends Controller
 {
+    public function landingPage() {
+        return Inertia::render("landing-page");
+    }    
+
     function customerRegisterView()
     {
         return Inertia::render('customer/register');

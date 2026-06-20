@@ -14,7 +14,7 @@ Route::get('/', function () {
 
         return redirect('/student/dashboard/profile');
     }
-    return redirect('/login');
+    return redirect('/landing-page');
 });
 
 require __DIR__ . '/settings.php';
