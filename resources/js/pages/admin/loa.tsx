@@ -1,92 +1,77 @@
+import { DataTable } from '@/components/admin/data-table';
+import { PageHeader } from '@/components/admin/page-header';
 import AdminLayout from '@/layouts/admin/admin-layout';
 import { useForm, usePage } from '@inertiajs/react';
+import { FileUp, X } from 'lucide-react';
 import { useState } from 'react';
 
-interface Loa {
-    id: number;
-    file: string;
-}
-
-interface StudentProfile {
-    full_name: string;
-}
-
-interface Student {
-    username: string;
-    studentProfile: StudentProfile | null;
-}
-
-interface Program {
-    name: string;
-}
-
-interface Registration {
-    id: number;
-    student: Student;
-    program: Program;
-    loa: Loa | null;
-}
-
-interface PageProps {
-    registrations: Registration[];
-    [key: string]: unknown;
-}
+interface Loa { id: number; file: string }
+interface StudentProfile { full_name: string }
+interface Student { username: string; studentProfile: StudentProfile | null }
+interface Program { name: string }
+interface Registration { id: number; student: Student; program: Program; loa: Loa | null }
+interface PageProps { registrations: Registration[]; [key: string]: unknown }
 
 function UploadLoaModal({ registration, onClose }: { registration: Registration; onClose: () => void }) {
-    const { setData, post, processing, errors } = useForm<{
-        registration_id: number;
-        file: File | null;
-    }>({
+    const { setData, post, processing, errors } = useForm<{ registration_id: number; file: File | null }>({
         registration_id: registration.id,
         file: null,
     });
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        post('/admin/dashboard/loa', {
-            forceFormData: true,
-            onSuccess: () => onClose(),
-        });
+        post('/admin/dashboard/loa', { forceFormData: true, onSuccess: () => onClose() });
     }
 
+    const studentName = registration.student.studentProfile?.full_name ?? registration.student.username;
+
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="w-full max-w-md bg-white p-6 shadow-xl">
-                <h2 className="mb-2 text-lg font-bold">Upload LOA</h2>
-                <p className="mb-4 text-sm text-gray-500">{registration.student.studentProfile?.full_name ?? registration.student.username}</p>
-                <p className="mb-6 text-sm text-gray-500">{registration.program.name}</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+            <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl">
+                <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+                    <h2 className="text-base font-bold text-gray-900">Upload LOA</h2>
+                    <button onClick={onClose} className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 transition">
+                        <X size={18} />
+                    </button>
+                </div>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <div>
-                        <label className="mb-1 block text-sm font-medium">File LOA</label>
-                        <input
-                            type="file"
-                            accept=".pdf"
-                            onChange={(e) => setData('file', e.target.files?.[0] || null)}
-                            className="block w-full border px-3 py-2 text-sm"
-                        />
-                        <p className="mt-1 text-xs text-gray-400">Format: PDF. Maks 5MB.</p>
-                        {errors.file && <p className="mt-1 text-xs text-red-500">{errors.file}</p>}
+                <div className="px-6 py-4">
+                    <div className="mb-5 space-y-2 rounded-xl bg-gray-50 p-4">
+                        <div className="flex justify-between text-sm">
+                            <span className="text-gray-500">Mahasiswa</span>
+                            <span className="font-semibold text-gray-800">{studentName}</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                            <span className="text-gray-500">Program</span>
+                            <span className="font-semibold text-gray-800">{registration.program.name}</span>
+                        </div>
                     </div>
 
-                    <div className="flex gap-3">
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            disabled={processing}
-                            className="flex-1 border py-2 text-sm font-semibold hover:bg-gray-100 disabled:opacity-50"
-                        >
-                            Batal
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={processing}
-                            className="flex-1 bg-black py-2 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50"
-                        >
-                            {processing ? 'Mengupload...' : 'Upload'}
-                        </button>
-                    </div>
-                </form>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="mb-1 block text-xs font-semibold text-gray-600">File LOA (PDF)</label>
+                            <input
+                                type="file"
+                                accept=".pdf"
+                                onChange={(e) => setData('file', e.target.files?.[0] || null)}
+                                className="block w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 file:mr-3 file:rounded-md file:border-0 file:bg-emerald-50 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-emerald-700 hover:file:bg-emerald-100 transition"
+                            />
+                            <p className="mt-1 text-xs text-gray-400">Format: PDF. Maks 5MB.</p>
+                            {errors.file && <p className="mt-1 text-xs text-red-500">{errors.file}</p>}
+                        </div>
+
+                        <div className="flex gap-3 pt-1">
+                            <button type="button" onClick={onClose} disabled={processing}
+                                className="flex-1 rounded-lg border border-gray-200 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 transition">
+                                Batal
+                            </button>
+                            <button type="submit" disabled={processing}
+                                className="flex-1 rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
+                                {processing ? 'Mengupload...' : 'Upload'}
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
@@ -95,111 +80,88 @@ function UploadLoaModal({ registration, onClose }: { registration: Registration;
 export default function LoaPage() {
     const { registrations } = usePage<PageProps>().props;
     const [selectedRegistration, setSelectedRegistration] = useState<Registration | null>(null);
-    const [search, setSearch] = useState('');
     const { delete: destroy, processing } = useForm({});
 
-    const filtered = registrations.filter((reg) => {
-        const name = reg.student.studentProfile?.full_name ?? reg.student.username;
-        const program = reg.program.name;
-        return name.toLowerCase().includes(search.toLowerCase()) || program.toLowerCase().includes(search.toLowerCase());
-    });
-
-    function handleDelete(loaId: number) {
-        destroy('/admin/dashboard/loa/' + loaId);
-    }
+    const rows = registrations.map((reg) => ({
+        ...reg,
+        _name: reg.student.studentProfile?.full_name ?? reg.student.username,
+        _program: reg.program.name,
+        _loa_status: reg.loa ? 'uploaded' : 'pending',
+    }));
 
     return (
         <AdminLayout active="loa">
-            {selectedRegistration && <UploadLoaModal registration={selectedRegistration} onClose={() => setSelectedRegistration(null)} />}
+            {selectedRegistration && (
+                <UploadLoaModal registration={selectedRegistration} onClose={() => setSelectedRegistration(null)} />
+            )}
 
-            <div className="mb-6">
-                <h1 className="text-2xl font-bold">Kelola LOA</h1>
-                <p className="text-gray-500">Upload LOA untuk mahasiswa yang telah diterima</p>
-            </div>
+            <PageHeader title="Kelola LOA" subtitle="Upload Letter of Acceptance untuk mahasiswa yang telah diterima" />
 
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Cari mahasiswa atau program..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-full border bg-white px-4 py-3 text-sm text-black focus:outline-none"
-                />
-            </div>
-
-            <div className="overflow-x-auto border bg-white shadow-sm">
-                <table className="w-full text-sm">
-                    <thead className="border-b bg-gray-50">
-                        <tr>
-                            <th className="px-6 py-3 text-center font-semibold">Mahasiswa</th>
-                            <th className="px-6 py-3 text-center font-semibold">Program</th>
-                            <th className="px-6 py-3 text-center font-semibold">Status LOA</th>
-                            <th className="px-6 py-3 text-center font-semibold">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filtered.length === 0 ? (
-                            <tr>
-                                <td colSpan={4} className="px-6 py-8 text-center text-gray-400">
-                                    Belum ada mahasiswa yang diterima.
-                                </td>
-                            </tr>
-                        ) : (
-                            filtered.map((registration) => (
-                                <tr key={registration.id} className="border-b last:border-0">
-                                    <td className="px-6 py-4 text-center">
-                                        {registration.student.studentProfile?.full_name ?? registration.student.username}
-                                    </td>
-                                    <td className="px-6 py-4 text-center">{registration.program.name}</td>
-                                    <td className="px-6 py-4 text-center">
-                                        {registration.loa ? (
-                                            <span className="bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-700">Sudah Upload</span>
-                                        ) : (
-                                            <span className="bg-yellow-100 px-2 py-0.5 text-xs font-semibold text-yellow-700">Belum Upload</span>
-                                        )}
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <div className="flex items-center justify-center gap-3">
-                                            {registration.loa ? (
-                                                <>
-                                                    <a
-                                                        href={'/storage/' + registration.loa.file}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-sm font-semibold underline hover:text-gray-600"
-                                                    >
-                                                        Lihat
-                                                    </a>
-                                                    <button
-                                                        onClick={() => setSelectedRegistration(registration)}
-                                                        className="text-sm font-semibold underline hover:text-gray-600"
-                                                    >
-                                                        Ganti
-                                                    </button>
-                                                    <button
-                                                        onClick={() => handleDelete(registration.loa!.id)}
-                                                        disabled={processing}
-                                                        className="text-sm font-semibold text-red-500 underline hover:text-red-700 disabled:opacity-50"
-                                                    >
-                                                        Hapus
-                                                    </button>
-                                                </>
-                                            ) : (
-                                                <button
-                                                    onClick={() => setSelectedRegistration(registration)}
-                                                    className="text-sm font-semibold underline hover:text-gray-600"
-                                                >
-                                                    Upload LOA
-                                                </button>
-                                            )}
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
-            </div>
+            <DataTable
+                data={rows as unknown as Record<string, unknown>[]}
+                searchKeys={['_name', '_program']}
+                searchPlaceholder="Cari mahasiswa atau program..."
+                filterKey="_loa_status"
+                filterOptions={[
+                    { label: 'Sudah Upload', value: 'uploaded' },
+                    { label: 'Belum Upload', value: 'pending' },
+                ]}
+                emptyMessage="Belum ada mahasiswa yang perlu LOA."
+                columns={[
+                    { key: '_name', label: 'Mahasiswa', sortable: true },
+                    { key: '_program', label: 'Program', sortable: true },
+                    {
+                        key: '_loa_status', label: 'Status LOA', align: 'center',
+                        render: (row) => {
+                            const r = row as typeof rows[0];
+                            return r.loa ? (
+                                <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200">
+                                    Sudah Upload
+                                </span>
+                            ) : (
+                                <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700 ring-1 ring-amber-200">
+                                    Belum Upload
+                                </span>
+                            );
+                        },
+                    },
+                ]}
+                actions={(row) => {
+                    const r = row as unknown as typeof rows[0];
+                    return r.loa ? (
+                        <div className="flex items-center justify-end gap-2">
+                            <a
+                                href={'/storage/' + r.loa.file}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 transition"
+                            >
+                                Lihat
+                            </a>
+                            <button
+                                onClick={() => setSelectedRegistration(r as unknown as Registration)}
+                                className="rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 transition"
+                            >
+                                Ganti
+                            </button>
+                            <button
+                                onClick={() => destroy('/admin/dashboard/loa/' + r.loa!.id)}
+                                disabled={processing}
+                                className="rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-red-100 hover:text-red-600 disabled:opacity-50 transition"
+                            >
+                                Hapus
+                            </button>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => setSelectedRegistration(r as unknown as Registration)}
+                            className="flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 transition"
+                        >
+                            <FileUp size={12} /> Upload LOA
+                        </button>
+                    );
+                }}
+            />
         </AdminLayout>
     );
 }

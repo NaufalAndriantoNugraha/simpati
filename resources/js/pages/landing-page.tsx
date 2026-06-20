@@ -19,18 +19,28 @@ import { useEffect, useState } from "react";
 export default function LandingPage() {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const [showScrollTop, setShowScrollTop] = useState(false);
+    const [navScrolled, setNavScrolled] = useState(false);
+    const [activeScene, setActiveScene] = useState(0);
+    const [animKey, setAnimKey] = useState(0);
 
     useEffect(() => {
         const handleScroll = () => {
             setShowScrollTop(window.scrollY > 300);
+            // hero height = 70vh, navbar berubah saat keluar dari hero
+            setNavScrolled(window.scrollY > window.innerHeight * 0.7 - 68);
         };
-
         window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    useEffect(() => {
+        const durations = [3500, 5000, 4000];
+        const id = setTimeout(() => {
+            setActiveScene((s) => (s + 1) % 3);
+            setAnimKey((k) => k + 1);
+        }, durations[activeScene]);
+        return () => clearTimeout(id);
+    }, [activeScene]);
 
     const studentFeatures = [
         {
@@ -145,56 +155,35 @@ export default function LandingPage() {
 
     return (
         <div className="min-h-screen bg-white text-gray-900">
-            <nav className="sticky top-0 z-50 border-b bg-white">
+            <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${navScrolled ? "border-b bg-white/95 shadow-sm backdrop-blur-md" : "border-b border-transparent bg-transparent"}`}>
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-                    <div className="flex items-center gap-3">
+                    <div className={`flex items-center gap-3 transition-colors duration-300 ${navScrolled ? "text-gray-900" : "text-white"}`}>
                         <Layers size={30} />
-                        <span className="text-2xl font-bold">
-                            SIMPATI
-                        </span>
+                        <span className="text-2xl font-bold">SIMPATI</span>
                     </div>
 
                     <div className="hidden items-center gap-8 md:flex">
-                        <a
-                            href="#home"
-                            className="text-lg transition hover:underline underline-offset-4"
-                        >
-                            Beranda
-                        </a>
-
-                        <a
-                            href="#keunggulan"
-                            className="text-lg transition hover:underline underline-offset-4"
-                        >
-                            Keunggulan
-                        </a>
-
-                        <a
-                            href="#fitur"
-                            className="text-lg transition hover:underline underline-offset-4"
-                        >
-                            Fitur-Fitur
-                        </a>
-
-                        <a
-                            href="#faq"
-                            className="text-lg transition hover:underline underline-offset-4"
-                        >
-                            FAQ
-                        </a>
+                        {["#home", "#keunggulan", "#fitur", "#faq"].map((href, i) => (
+                            <a
+                                key={href}
+                                href={href}
+                                className={`text-lg transition-colors duration-300 hover:underline underline-offset-4 ${navScrolled ? "text-gray-900" : "text-white/90 hover:text-white"}`}
+                            >
+                                {["Beranda", "Keunggulan", "Fitur-Fitur", "FAQ"][i]}
+                            </a>
+                        ))}
                     </div>
 
                     <div className="flex items-center gap-3">
                         <a
                             href="/login"
-                            className="border border-black px-4 py-2 transition hover:bg-gray-100"
+                            className={`px-4 py-2 transition-all duration-300 ${navScrolled ? "border border-black text-gray-900 hover:bg-gray-100" : "border border-white/50 text-white hover:bg-white/10"}`}
                         >
                             Login
                         </a>
-
                         <a
                             href="/register"
-                            className="bg-black px-4 py-2 text-white transition hover:bg-gray-800"
+                            className={`px-4 py-2 transition-all duration-300 ${navScrolled ? "bg-black text-white hover:bg-gray-800" : "bg-white text-gray-900 hover:bg-white/90"}`}
                         >
                             Daftar
                         </a>
@@ -202,37 +191,158 @@ export default function LandingPage() {
                 </div>
             </nav>
 
+            {/* Keyframe animations */}
+            <style>{`
+                @keyframes zoomOutGrid {
+                    from { transform: scale(2.2); }
+                    to   { transform: scale(1); }
+                }
+                @keyframes marqueeRight {
+                    0%   { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+                @keyframes zoomInHero {
+                    from { transform: scale(1); }
+                    to   { transform: scale(1.5); }
+                }
+            `}</style>
+
             <section
                 id="home"
-                className="mx-auto flex max-w-7xl flex-col items-center gap-12 px-6 py-14 md:flex-row"
+                style={{
+                    position: "relative",
+                    height: "70vh",
+                    minHeight: 520,
+                    overflow: "hidden",
+                    background: "#0a0a0a",
+                    display: "flex",
+                    alignItems: "center",
+                }}
             >
-                <div className="flex-1 text-left">
-                    <h1 className="text-4xl font-bold leading-tight md:text-5xl">
-                        Sistem Pendaftaran
-                        <br />
-                        Studi Independen
-                    </h1>
+                {/* ── Scene backgrounds ── */}
+                <div style={{ position: "absolute", inset: 0 }}>
 
-                    <p className="mt-6 max-w-xl text-lg text-gray-600 md:text-xl text-justify">
-                        Proses pendaftaran secara digital yang mudah dan cepat bagi calon siswa. Serta memudahkan pengelola program studi independen untuk membuat kursus baru dengan cepat serta lebih efisien.
-                    </p>
-
-                    <div className="mt-8">
-                        <a
-                            href="/register"
-                            className="inline-block bg-black px-6 py-3 text-white transition hover:bg-gray-800"
+                    {/* Scene 1: zoom-out grid */}
+                    <div style={{ position: "absolute", inset: 0, opacity: activeScene === 0 ? 1 : 0, transition: "opacity 0.8s ease" }}>
+                        <div
+                            key={activeScene === 0 ? animKey : "s1"}
+                            style={{
+                                position: "absolute", top: 32, bottom: 32, left: 32, right: 32,
+                                display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8,
+                                transformOrigin: "center center",
+                                animation: activeScene === 0 ? "zoomOutGrid 5s cubic-bezier(.25,.46,.45,.94) both" : "none",
+                            }}
                         >
-                            Daftar Sekarang
-                        </a>
+                            {["/images/scene1-1.jpg", "/images/scene1-2.webp", "/images/scene1-3.jpg"].map((src, i) => (
+                                <div key={i} style={{ borderRadius: 12, overflow: "hidden" }}>
+                                    <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Scene 2: marquee horizontal */}
+                    <div style={{
+                        position: "absolute", inset: 0,
+                        opacity: activeScene === 1 ? 1 : 0, transition: "opacity 0.8s ease",
+                        overflow: "hidden",
+                        WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                        maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                    }}>
+                        <div
+                            key={activeScene === 1 ? animKey : "s2"}
+                            style={{
+                                display: "flex", gap: 12, width: "max-content",
+                                animation: activeScene === 1 ? "marqueeRight 20s linear infinite" : "none",
+                            }}
+                        >
+                            {/* original + duplicate for seamless loop */}
+                            {[...Array(2)].flatMap((_, loop) =>
+                                [
+                                    "/images/scene2-1.png",
+                                    "/images/scene2-2.jpeg",
+                                    "/images/scene2-3.jpg",
+                                    "/images/scene2-4.jpg",
+                                    "/images/scene2-5.jpg",
+                                ].map((src, i) => (
+                                    <div key={`${loop}-${i}`} style={{ width: 420, height: "70vh", minHeight: 520, flexShrink: 0, overflow: "hidden" }}>
+                                        <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Scene 3: hero zoom-in */}
+                    <div style={{ position: "absolute", inset: 0, opacity: activeScene === 2 ? 1 : 0, transition: "opacity 0.8s ease", overflow: "hidden" }}>
+                        <div
+                            key={activeScene === 2 ? animKey : "s3"}
+                            style={{
+                                width: "100%", height: "100%",
+                                animation: activeScene === 2 ? "zoomInHero 6s cubic-bezier(.25,.46,.45,.94) both" : "none",
+                            }}
+                        >
+                            <img src="/images/landing_page.jpg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        </div>
                     </div>
                 </div>
 
-                <div className="flex-1">
-                    <img
-                        src="/images/landing_page.jpg"
-                        alt="Studi Independen"
-                        className="h-[400px] w-full object-cover shadow-lg"
-                    />
+                {/* Overlay gelap */}
+                <div style={{
+                    position: "absolute", inset: 0, zIndex: 1,
+                    background: "linear-gradient(to bottom, rgba(10,5,5,0.5) 0%, rgba(10,5,5,0.25) 45%, rgba(10,5,5,0.75) 100%)",
+                }} />
+
+                {/* Konten hero */}
+                <div style={{ position: "relative", zIndex: 2, width: "100%" }}>
+                    <div className="mx-auto max-w-4xl px-6 text-center">
+                        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-sm">
+                            <span className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
+                            <span className="text-xs font-semibold tracking-wide text-white/80">
+                                Platform Pendaftaran Digital
+                            </span>
+                        </div>
+
+                        <h1 className="text-4xl font-bold leading-tight text-white md:text-6xl" style={{ textShadow: "0 4px 40px rgba(0,0,0,0.7)" }}>
+                            Sistem Pendaftaran
+                            <br />Studi Independen
+                        </h1>
+
+                        <p className="mx-auto mt-6 max-w-2xl text-lg text-white/60 md:text-xl">
+                            Proses pendaftaran secara digital yang mudah dan cepat bagi calon siswa serta pengelola program studi independen.
+                        </p>
+
+                        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                            <a
+                                href="/register"
+                                className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 font-semibold text-gray-900 transition hover:-translate-y-0.5 hover:bg-white/90 hover:shadow-xl"
+                            >
+                                Daftar Sekarang
+                            </a>
+                            <a
+                                href="#keunggulan"
+                                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3 font-semibold text-white transition hover:border-white/60 hover:bg-white/5 hover:-translate-y-0.5"
+                            >
+                                Pelajari Lebih Lanjut
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Progress dots */}
+                <div style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)", zIndex: 3, display: "flex", gap: 8 }}>
+                    {[0, 1, 2].map((i) => (
+                        <button
+                            key={i}
+                            onClick={() => { setActiveScene(i); setAnimKey(k => k + 1); }}
+                            style={{
+                                width: 8, height: 8, borderRadius: "50%", border: "none", cursor: "pointer", padding: 0,
+                                background: activeScene === i ? "white" : "rgba(255,255,255,0.3)",
+                                transform: activeScene === i ? "scale(1.3)" : "scale(1)",
+                                transition: "all 0.3s",
+                            }}
+                        />
+                    ))}
                 </div>
             </section>
 
