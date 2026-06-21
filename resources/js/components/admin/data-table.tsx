@@ -91,7 +91,7 @@ export function DataTable<T extends Record<string, unknown>>({
     const alignClass = { left: 'text-left', center: 'text-center', right: 'text-right' };
 
     return (
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+        <div className="overflow-hidden border border-gray-200 bg-white shadow-sm">
             {/* Toolbar */}
             <div className="flex flex-wrap items-center gap-3 border-b border-gray-100 px-5 py-4">
                 {/* Search */}
@@ -102,7 +102,7 @@ export function DataTable<T extends Record<string, unknown>>({
                         placeholder={searchPlaceholder}
                         value={search}
                         onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                        className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm text-gray-700 outline-none focus:border-emerald-400 focus:bg-white focus:ring-2 focus:ring-emerald-100 transition"
+                        className="w-full border border-gray-200 bg-gray-50 py-2 pl-9 pr-4 text-sm text-gray-700 outline-none focus:border-emerald-400 focus:bg-white focus:ring-2 focus:ring-emerald-100 transition"
                     />
                 </div>
 
@@ -113,7 +113,7 @@ export function DataTable<T extends Record<string, unknown>>({
                         <select
                             value={filterValue}
                             onChange={(e) => { setFilterValue(e.target.value); setPage(1); }}
-                            className="rounded-lg border border-gray-200 bg-gray-50 py-2 pl-3 pr-8 text-sm text-gray-700 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition"
+                            className="border border-gray-200 bg-gray-50 py-2 pl-3 pr-8 text-sm text-gray-700 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition"
                         >
                             <option value="">Semua Status</option>
                             {filterOptions.map((o) => (
@@ -189,7 +189,7 @@ export function DataTable<T extends Record<string, unknown>>({
                         <select
                             value={pageSize}
                             onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }}
-                            className="rounded border border-gray-200 px-1.5 py-1 text-xs outline-none focus:border-emerald-400"
+                            className="border border-gray-200 px-1.5 py-1 text-xs outline-none focus:border-emerald-400"
                         >
                             {pageSizeOptions.map((n) => <option key={n} value={n}>{n}</option>)}
                         </select>
@@ -203,7 +203,7 @@ export function DataTable<T extends Record<string, unknown>>({
                         <button
                             onClick={() => setPage(p => Math.max(1, p - 1))}
                             disabled={page === 1}
-                            className="rounded px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
+                            className="px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
                         >
                             ‹ Prev
                         </button>
@@ -213,7 +213,7 @@ export function DataTable<T extends Record<string, unknown>>({
                                 <button
                                     key={n}
                                     onClick={() => setPage(n)}
-                                    className={`min-w-[28px] rounded px-2 py-1 text-xs transition ${n === page ? 'bg-emerald-600 text-white font-semibold' : 'text-gray-600 hover:bg-gray-100'}`}
+                                    className={`min-w-[28px] px-2 py-1 text-xs transition ${n === page ? 'bg-emerald-600 text-white font-semibold' : 'text-gray-600 hover:bg-gray-100'}`}
                                 >
                                     {n}
                                 </button>
@@ -222,7 +222,7 @@ export function DataTable<T extends Record<string, unknown>>({
                         <button
                             onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                             disabled={page === totalPages}
-                            className="rounded px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
+                            className="px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
                         >
                             Next ›
                         </button>

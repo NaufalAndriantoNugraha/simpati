@@ -27,21 +27,21 @@ export default function Profile() {
     return (
         <AdminLayout active="profile">
             {/* Hero card */}
-            <div className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 text-white shadow-xl">
+            <div className="relative mb-6 overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 text-white shadow-xl">
                 {/* Decorative blur */}
-                <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-emerald-600/20 blur-3xl" />
-                <div className="pointer-events-none absolute -bottom-10 left-1/3 h-48 w-48 rounded-full bg-emerald-400/10 blur-3xl" />
+                <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 bg-emerald-600/20 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-10 left-1/3 h-48 w-48 bg-emerald-400/10 blur-3xl" />
 
                 <div className="relative flex flex-col items-start gap-6 sm:flex-row sm:items-center">
                     {/* Avatar */}
-                    <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-emerald-600 text-3xl font-black text-white shadow-lg ring-4 ring-white/10">
+                    <div className="flex h-20 w-20 shrink-0 items-center justify-center bg-emerald-600 text-3xl font-black text-white shadow-lg ring-4 ring-white/10">
                         {initials}
                     </div>
 
                     <div className="flex-1">
                         <div className="flex flex-wrap items-center gap-3">
                             <h1 className="text-2xl font-bold">{user?.username ?? '—'}</h1>
-                            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-3 py-0.5 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-400/30">
+                            <span className="inline-flex items-center gap-1 bg-emerald-500/20 px-3 py-0.5 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-400/30">
                                 <Shield size={11} />
                                 Administrator
                             </span>
@@ -61,43 +61,43 @@ export default function Profile() {
 
             {/* Info detail */}
             <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+                <div className="border border-gray-100 bg-white p-5 shadow-sm">
                     <div className="mb-4 flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50">
+                        <div className="flex h-8 w-8 items-center justify-center bg-emerald-50">
                             <User size={15} className="text-emerald-600" />
                         </div>
                         <h3 className="text-sm font-semibold text-gray-700">Informasi Akun</h3>
                     </div>
                     <div className="space-y-3">
-                        <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
+                        <div className="flex items-center justify-between bg-gray-50 px-4 py-3">
                             <span className="text-xs font-medium text-gray-500">Username</span>
                             <span className="text-sm font-semibold text-gray-800">{user?.username ?? '—'}</span>
                         </div>
-                        <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
+                        <div className="flex items-center justify-between bg-gray-50 px-4 py-3">
                             <span className="text-xs font-medium text-gray-500">Role</span>
                             <span className="text-sm font-semibold text-gray-800 capitalize">{user?.role ?? 'admin'}</span>
                         </div>
                     </div>
                 </div>
 
-                <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+                <div className="border border-gray-100 bg-white p-5 shadow-sm">
                     <div className="mb-4 flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50">
+                        <div className="flex h-8 w-8 items-center justify-center bg-emerald-50">
                             <Mail size={15} className="text-emerald-600" />
                         </div>
                         <h3 className="text-sm font-semibold text-gray-700">Kontak</h3>
                     </div>
                     <div className="space-y-3">
-                        <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3">
+                        <div className="flex items-center justify-between bg-gray-50 px-4 py-3">
                             <span className="text-xs font-medium text-gray-500">Email</span>
                             <span className="text-sm font-semibold text-gray-800">{user?.email ?? '—'}</span>
                         </div>
                     </div>
                 </div>
 
-                <div className="rounded-xl border border-amber-100 bg-amber-50 p-5 sm:col-span-2">
+                <div className="border border-amber-100 bg-amber-50 p-5 sm:col-span-2">
                     <div className="flex items-start gap-3">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center bg-amber-100">
                             <KeyRound size={15} className="text-amber-600" />
                         </div>
                         <div className="flex-1">
@@ -108,7 +108,7 @@ export default function Profile() {
                         </div>
                         <a
                             href="/admin/dashboard/email-password"
-                            className="shrink-0 rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-700 transition"
+                            className="shrink-0 bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-700 transition"
                         >
                             Ubah Kredensial
                         </a>

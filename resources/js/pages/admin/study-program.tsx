@@ -31,7 +31,7 @@ function FormModal({
             <label className="mb-1 block text-xs font-semibold text-gray-600">{label}</label>
             {extra ?? (
                 <input type={type} value={data[key]} onChange={(e) => setData(key, e.target.value)}
-                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition" />
+                    className="w-full border border-gray-200 px-3 py-2 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition" />
             )}
             {errors[key] && <p className="mt-1 text-xs text-red-500">{errors[key]}</p>}
         </div>
@@ -39,10 +39,10 @@ function FormModal({
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-            <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
+            <div className="w-full max-w-2xl bg-white shadow-2xl">
                 <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
                     <h2 className="text-base font-bold text-gray-900">{title}</h2>
-                    <button onClick={onClose} className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 transition"><X size={18} /></button>
+                    <button onClick={onClose} className="p-1.5 text-gray-400 hover:bg-gray-100 transition"><X size={18} /></button>
                 </div>
 
                 <form onSubmit={onSubmit} className="p-6">
@@ -53,13 +53,13 @@ function FormModal({
                             {field('Deskripsi', 'description', 'text',
                                 <textarea value={data.description} onChange={(e) => setData('description', e.target.value)}
                                     rows={3}
-                                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition" />
+                                    className="w-full border border-gray-200 px-3 py-2 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition" />
                             )}
                         </div>
                         {field('Harga (Rp)', 'price', 'number')}
                         {field('Status', 'status', 'text',
                             <select value={data.status} onChange={(e) => setData('status', e.target.value)}
-                                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition">
+                                className="w-full border border-gray-200 px-3 py-2 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition">
                                 <option value="draft">Draft</option>
                                 <option value="open">Buka</option>
                                 <option value="closed">Tutup</option>
@@ -71,11 +71,11 @@ function FormModal({
 
                     <div className="mt-6 flex justify-end gap-3">
                         <button type="button" onClick={onClose}
-                            className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">
+                            className="border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-50 transition">
                             Batal
                         </button>
                         <button type="submit" disabled={processing}
-                            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
+                            className="bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
                             {processing ? 'Menyimpan...' : 'Simpan'}
                         </button>
                     </div>
@@ -97,9 +97,11 @@ export default function StudyProgram({ programs }: Props) {
     function openAdd() { reset(); setEditingProgram(null); setShowForm(true); }
 
     function openEdit(p: StudyProgram) {
-        setData({ name: p.name, description: p.description, student_quota: String(p.student_quota),
+        setData({
+            name: p.name, description: p.description, student_quota: String(p.student_quota),
             price: String(p.price), registration_open: p.registration_open,
-            registration_close: p.registration_close, status: p.status });
+            registration_close: p.registration_close, status: p.status
+        });
         setEditingProgram(p); setShowForm(true);
     }
 
@@ -132,7 +134,7 @@ export default function StudyProgram({ programs }: Props) {
                 subtitle="Tambah dan kelola program studi independen"
                 action={
                     <button onClick={openAdd}
-                        className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 transition">
+                        className="flex items-center gap-2 bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 transition">
                         <Plus size={15} /> Tambah Program
                     </button>
                 }
@@ -144,9 +146,9 @@ export default function StudyProgram({ programs }: Props) {
                 searchPlaceholder="Cari program..."
                 filterKey="status"
                 filterOptions={[
-                    { label: 'Draft',  value: 'draft' },
-                    { label: 'Buka',   value: 'open' },
-                    { label: 'Tutup',  value: 'closed' },
+                    { label: 'Draft', value: 'draft' },
+                    { label: 'Buka', value: 'open' },
+                    { label: 'Tutup', value: 'closed' },
                 ]}
                 emptyMessage="Belum ada program studi."
                 columns={[
@@ -182,11 +184,11 @@ export default function StudyProgram({ programs }: Props) {
                     return (
                         <div className="flex items-center justify-end gap-2">
                             <button onClick={() => openEdit(p)}
-                                className="flex items-center gap-1 rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 transition">
+                                className="flex items-center gap-1 bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 transition">
                                 <Pencil size={12} /> Edit
                             </button>
                             <button onClick={() => handleDelete(p.id)}
-                                className="flex items-center gap-1 rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-red-100 hover:text-red-600 transition">
+                                className="flex items-center gap-1 bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-red-100 hover:text-red-600 transition">
                                 <Trash2 size={12} /> Hapus
                             </button>
                         </div>

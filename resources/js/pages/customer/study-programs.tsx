@@ -20,15 +20,15 @@ function ConfirmModal({ program, onConfirm, onCancel, processing }: {
 }) {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-            <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl">
+            <div className="w-full max-w-md bg-white shadow-2xl">
                 <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
                     <h2 className="text-base font-bold text-gray-900">Konfirmasi Pendaftaran</h2>
-                    <button onClick={onCancel} className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 transition"><X size={18} /></button>
+                    <button onClick={onCancel} className="p-1.5 text-gray-400 hover:bg-gray-100 transition"><X size={18} /></button>
                 </div>
                 <div className="p-6">
                     <p className="mb-1 text-sm text-gray-500">Anda akan mendaftar ke program:</p>
                     <p className="mb-5 font-semibold text-gray-900">{program.name}</p>
-                    <div className="mb-5 space-y-2 rounded-xl bg-gray-50 p-4">
+                    <div className="mb-5 space-y-2 bg-gray-50 p-4">
                         <div className="flex justify-between text-sm">
                             <span className="text-gray-500">Harga</span>
                             <span className="font-semibold text-emerald-700">Rp {Number(program.price).toLocaleString('id-ID')}</span>
@@ -44,11 +44,11 @@ function ConfirmModal({ program, onConfirm, onCancel, processing }: {
                     </div>
                     <div className="flex gap-3">
                         <button onClick={onCancel} disabled={processing}
-                            className="flex-1 rounded-lg border border-gray-200 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 transition">
+                            className="flex-1 border border-gray-200 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 transition">
                             Batal
                         </button>
                         <button onClick={onConfirm} disabled={processing}
-                            className="flex-1 rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
+                            className="flex-1 bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
                             {processing ? 'Mendaftar...' : 'Konfirmasi'}
                         </button>
                     </div>
@@ -72,12 +72,12 @@ function ProgramCard({ program, isRegistered }: { program: StudyProgram; isRegis
         <>
             {showModal && <ConfirmModal program={program} onConfirm={handleConfirm} onCancel={() => setShowModal(false)} processing={processing} />}
 
-            <div className="flex flex-col rounded-xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition">
+            <div className="flex flex-col border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition">
                 <div className="mb-3 flex items-start justify-between gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-emerald-50">
                         <BookOpen size={18} className="text-emerald-600" />
                     </div>
-                    <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200">
+                    <span className="inline-flex items-center bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200">
                         Buka
                     </span>
                 </div>
@@ -86,17 +86,17 @@ function ProgramCard({ program, isRegistered }: { program: StudyProgram; isRegis
                 <p className="mb-4 line-clamp-2 text-sm text-gray-500 flex-1">{program.description}</p>
 
                 <div className="mb-4 grid grid-cols-2 gap-3">
-                    <div className="rounded-lg bg-gray-50 px-3 py-2">
+                    <div className="bg-gray-50 px-3 py-2">
                         <div className="flex items-center gap-1.5 text-xs text-gray-400">
                             <Users size={11} /> Sisa Kuota
                         </div>
                         <p className="mt-0.5 text-sm font-semibold text-gray-800">{program.remaining_quota} orang</p>
                     </div>
-                    <div className="rounded-lg bg-gray-50 px-3 py-2">
+                    <div className="bg-gray-50 px-3 py-2">
                         <p className="text-xs text-gray-400">Harga</p>
                         <p className="mt-0.5 text-sm font-semibold text-emerald-700">Rp {Number(program.price).toLocaleString('id-ID')}</p>
                     </div>
-                    <div className="col-span-2 rounded-lg bg-gray-50 px-3 py-2">
+                    <div className="col-span-2 bg-gray-50 px-3 py-2">
                         <div className="flex items-center gap-1.5 text-xs text-gray-400">
                             <Calendar size={11} /> Periode Pendaftaran
                         </div>
@@ -105,21 +105,21 @@ function ProgramCard({ program, isRegistered }: { program: StudyProgram; isRegis
                 </div>
 
                 <Link href={'/student/dashboard/programs/' + program.id}
-                    className="mb-2 block w-full rounded-lg border border-gray-200 py-2 text-center text-sm font-semibold text-gray-700 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 transition">
+                    className="mb-2 block w-full border border-gray-200 py-2 text-center text-sm font-semibold text-gray-700 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 transition">
                     Lihat Detail
                 </Link>
 
                 {isRegistered ? (
-                    <button disabled className="w-full cursor-not-allowed rounded-lg bg-gray-100 py-2 text-sm font-semibold text-gray-400">
+                    <button disabled className="w-full cursor-not-allowed bg-gray-100 py-2 text-sm font-semibold text-gray-400">
                         Sudah Terdaftar
                     </button>
                 ) : isFull ? (
-                    <button disabled className="w-full cursor-not-allowed rounded-lg bg-gray-100 py-2 text-sm font-semibold text-gray-400">
+                    <button disabled className="w-full cursor-not-allowed bg-gray-100 py-2 text-sm font-semibold text-gray-400">
                         Kuota Penuh
                     </button>
                 ) : (
                     <button onClick={() => setShowModal(true)}
-                        className="w-full rounded-lg bg-emerald-600 py-2 text-sm font-semibold text-white hover:bg-emerald-700 transition">
+                        className="w-full bg-emerald-600 py-2 text-sm font-semibold text-white hover:bg-emerald-700 transition">
                         Daftar Sekarang
                     </button>
                 )}
@@ -139,7 +139,7 @@ export default function Programs() {
             </div>
 
             {programs.length === 0 ? (
-                <div className="rounded-xl border border-gray-100 bg-white p-12 text-center shadow-sm">
+                <div className="border border-gray-100 bg-white p-12 text-center shadow-sm">
                     <BookOpen size={32} className="mx-auto mb-3 text-gray-300" />
                     <p className="text-sm text-gray-400">Belum ada program studi yang tersedia.</p>
                 </div>

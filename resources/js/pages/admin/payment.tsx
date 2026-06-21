@@ -11,7 +11,7 @@ interface Student { username: string; studentProfile: StudentProfile | null }
 interface Program { name: string; price: number }
 interface Registration { id: number; status: string; student: Student; program: Program }
 interface Payment { id: number; file: string; status: 'pending' | 'accepted' | 'rejected'; registration: Registration }
-interface PageProps { payments: Payment[]; [key: string]: unknown }
+interface PageProps { payments: Payment[];[key: string]: unknown }
 
 function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => void }) {
     const acceptForm = useForm({ status: 'accepted' });
@@ -20,11 +20,11 @@ function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => vo
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+            <div className="w-full max-w-md bg-white p-6 shadow-2xl">
                 <h2 className="mb-1 text-lg font-bold text-gray-900">Verifikasi Pembayaran</h2>
                 <p className="mb-5 text-sm text-gray-500">Tinjau dan tentukan status pembayaran berikut.</p>
 
-                <div className="mb-4 space-y-3 rounded-xl bg-gray-50 p-4">
+                <div className="mb-4 space-y-3 bg-gray-50 p-4">
                     <div className="flex justify-between text-sm">
                         <span className="text-gray-500">Mahasiswa</span>
                         <span className="font-semibold text-gray-800">
@@ -47,7 +47,7 @@ function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => vo
                     href={'/storage/' + payment.file}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mb-5 flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-100 transition"
+                    className="mb-5 flex items-center gap-2 border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-100 transition"
                 >
                     <ExternalLink size={15} />
                     Lihat Bukti Pembayaran
@@ -55,17 +55,17 @@ function VerifyModal({ payment, onClose }: { payment: Payment; onClose: () => vo
 
                 <div className="flex gap-3">
                     <button onClick={onClose} disabled={processing}
-                        className="flex-1 rounded-lg border border-gray-200 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 transition">
+                        className="flex-1 border border-gray-200 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 transition">
                         Batal
                     </button>
                     <button onClick={() => rejectForm.put('/admin/dashboard/payment/' + payment.id, { onSuccess: onClose })}
                         disabled={processing}
-                        className="flex-1 rounded-lg border border-red-200 bg-red-50 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-100 disabled:opacity-50 transition">
+                        className="flex-1 border border-red-200 bg-red-50 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-100 disabled:opacity-50 transition">
                         Tolak
                     </button>
                     <button onClick={() => acceptForm.put('/admin/dashboard/payment/' + payment.id, { onSuccess: onClose })}
                         disabled={processing}
-                        className="flex-1 rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
+                        className="flex-1 bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
                         {processing ? 'Memproses...' : 'Terima'}
                     </button>
                 </div>
@@ -99,12 +99,12 @@ export default function Payment() {
                 filterOptions={[
                     { label: 'Menunggu', value: 'pending' },
                     { label: 'Diterima', value: 'accepted' },
-                    { label: 'Ditolak',  value: 'rejected' },
+                    { label: 'Ditolak', value: 'rejected' },
                 ]}
                 emptyMessage="Tidak ada data pembayaran ditemukan."
                 columns={[
-                    { key: '_name',    label: 'Mahasiswa', sortable: true },
-                    { key: '_program', label: 'Program',   sortable: true },
+                    { key: '_name', label: 'Mahasiswa', sortable: true },
+                    { key: '_program', label: 'Program', sortable: true },
                     {
                         key: '_price', label: 'Harga', sortable: true, align: 'right',
                         render: (row) => (
@@ -123,7 +123,7 @@ export default function Payment() {
                     return p.status === 'pending' ? (
                         <button
                             onClick={() => setSelected(p)}
-                            className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 transition"
+                            className="bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 transition"
                         >
                             Verifikasi
                         </button>

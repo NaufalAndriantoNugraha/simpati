@@ -10,7 +10,7 @@ interface StudentProfile { full_name: string }
 interface Student { username: string; studentProfile: StudentProfile | null }
 interface Program { name: string }
 interface Registration { id: number; student: Student; program: Program; loa: Loa | null }
-interface PageProps { registrations: Registration[]; [key: string]: unknown }
+interface PageProps { registrations: Registration[];[key: string]: unknown }
 
 function UploadLoaModal({ registration, onClose }: { registration: Registration; onClose: () => void }) {
     const { setData, post, processing, errors } = useForm<{ registration_id: number; file: File | null }>({
@@ -27,16 +27,16 @@ function UploadLoaModal({ registration, onClose }: { registration: Registration;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-            <div className="w-full max-w-md rounded-2xl bg-white shadow-2xl">
+            <div className="w-full max-w-md bg-white shadow-2xl">
                 <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
                     <h2 className="text-base font-bold text-gray-900">Upload LOA</h2>
-                    <button onClick={onClose} className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 transition">
+                    <button onClick={onClose} className="p-1.5 text-gray-400 hover:bg-gray-100 transition">
                         <X size={18} />
                     </button>
                 </div>
 
                 <div className="px-6 py-4">
-                    <div className="mb-5 space-y-2 rounded-xl bg-gray-50 p-4">
+                    <div className="mb-5 space-y-2 bg-gray-50 p-4">
                         <div className="flex justify-between text-sm">
                             <span className="text-gray-500">Mahasiswa</span>
                             <span className="font-semibold text-gray-800">{studentName}</span>
@@ -54,7 +54,7 @@ function UploadLoaModal({ registration, onClose }: { registration: Registration;
                                 type="file"
                                 accept=".pdf"
                                 onChange={(e) => setData('file', e.target.files?.[0] || null)}
-                                className="block w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 file:mr-3 file:rounded-md file:border-0 file:bg-emerald-50 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-emerald-700 hover:file:bg-emerald-100 transition"
+                                className="block w-full border border-gray-200 px-3 py-2 text-sm text-gray-700 file:mr-3 file:border-0 file:bg-emerald-50 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-emerald-700 hover:file:bg-emerald-100 transition"
                             />
                             <p className="mt-1 text-xs text-gray-400">Format: PDF. Maks 5MB.</p>
                             {errors.file && <p className="mt-1 text-xs text-red-500">{errors.file}</p>}
@@ -62,11 +62,11 @@ function UploadLoaModal({ registration, onClose }: { registration: Registration;
 
                         <div className="flex gap-3 pt-1">
                             <button type="button" onClick={onClose} disabled={processing}
-                                className="flex-1 rounded-lg border border-gray-200 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 transition">
+                                className="flex-1 border border-gray-200 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 transition">
                                 Batal
                             </button>
                             <button type="submit" disabled={processing}
-                                className="flex-1 rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
+                                className="flex-1 bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
                                 {processing ? 'Mengupload...' : 'Upload'}
                             </button>
                         </div>
@@ -115,11 +115,11 @@ export default function LoaPage() {
                         render: (row) => {
                             const r = row as typeof rows[0];
                             return r.loa ? (
-                                <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200">
+                                <span className="inline-flex items-center bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-200">
                                     Sudah Upload
                                 </span>
                             ) : (
-                                <span className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700 ring-1 ring-amber-200">
+                                <span className="inline-flex items-center bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700 ring-1 ring-amber-200">
                                     Belum Upload
                                 </span>
                             );
@@ -134,20 +134,20 @@ export default function LoaPage() {
                                 href={'/storage/' + r.loa.file}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 transition"
+                                className="bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 transition"
                             >
                                 Lihat
                             </a>
                             <button
                                 onClick={() => setSelectedRegistration(r as unknown as Registration)}
-                                className="rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 transition"
+                                className="bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-emerald-100 hover:text-emerald-700 transition"
                             >
                                 Ganti
                             </button>
                             <button
                                 onClick={() => destroy('/admin/dashboard/loa/' + r.loa!.id)}
                                 disabled={processing}
-                                className="rounded-lg bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-red-100 hover:text-red-600 disabled:opacity-50 transition"
+                                className="bg-gray-100 px-2.5 py-1.5 text-xs font-semibold text-gray-700 hover:bg-red-100 hover:text-red-600 disabled:opacity-50 transition"
                             >
                                 Hapus
                             </button>
@@ -155,7 +155,7 @@ export default function LoaPage() {
                     ) : (
                         <button
                             onClick={() => setSelectedRegistration(r as unknown as Registration)}
-                            className="flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 transition"
+                            className="flex items-center gap-1 bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700 transition"
                         >
                             <FileUp size={12} /> Upload LOA
                         </button>

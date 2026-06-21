@@ -3,23 +3,23 @@ import { BookOpen, GraduationCap, Layers, MapPin, User } from 'lucide-react';
 import React from 'react';
 
 const provinsi = [
-    'Aceh','Sumatera Utara','Sumatera Barat','Riau','Jambi','Sumatera Selatan',
-    'Bengkulu','Lampung','Kepulauan Bangka Belitung','Kepulauan Riau',
-    'DKI Jakarta','Jawa Barat','Jawa Tengah','DI Yogyakarta','Jawa Timur','Banten',
-    'Bali','Nusa Tenggara Barat','Nusa Tenggara Timur',
-    'Kalimantan Barat','Kalimantan Tengah','Kalimantan Selatan','Kalimantan Timur','Kalimantan Utara',
-    'Sulawesi Utara','Sulawesi Tengah','Sulawesi Selatan','Sulawesi Tenggara','Gorontalo','Sulawesi Barat',
-    'Maluku','Maluku Utara','Papua Barat','Papua',
+    'Aceh', 'Sumatera Utara', 'Sumatera Barat', 'Riau', 'Jambi', 'Sumatera Selatan',
+    'Bengkulu', 'Lampung', 'Kepulauan Bangka Belitung', 'Kepulauan Riau',
+    'DKI Jakarta', 'Jawa Barat', 'Jawa Tengah', 'DI Yogyakarta', 'Jawa Timur', 'Banten',
+    'Bali', 'Nusa Tenggara Barat', 'Nusa Tenggara Timur',
+    'Kalimantan Barat', 'Kalimantan Tengah', 'Kalimantan Selatan', 'Kalimantan Timur', 'Kalimantan Utara',
+    'Sulawesi Utara', 'Sulawesi Tengah', 'Sulawesi Selatan', 'Sulawesi Tenggara', 'Gorontalo', 'Sulawesi Barat',
+    'Maluku', 'Maluku Utara', 'Papua Barat', 'Papua',
 ];
 
-const inputCls = 'block w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition placeholder:text-gray-400';
+const inputCls = 'block w-full border border-gray-200 px-3 py-2.5 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition placeholder:text-gray-400';
 const labelCls = 'mb-1 block text-xs font-semibold text-gray-600';
 
 function SectionCard({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
     return (
-        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+        <div className="border border-gray-100 bg-white p-6 shadow-sm">
             <div className="mb-5 flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50">
+                <div className="flex h-9 w-9 items-center justify-center bg-emerald-50">
                     {icon}
                 </div>
                 <h2 className="text-sm font-bold text-gray-800">{title}</h2>
@@ -44,12 +44,12 @@ export default function FillBiodata() {
             <header className="border-b border-gray-200 bg-white">
                 <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
                     <div className="flex items-center gap-2.5">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600">
+                        <div className="flex h-8 w-8 items-center justify-center bg-emerald-600">
                             <Layers size={16} className="text-white" />
                         </div>
                         <span className="font-bold text-gray-900">SIMPATI</span>
                     </div>
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                    <span className="bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
                         Langkah 1 dari 1 — Isi Biodata
                     </span>
                 </div>
@@ -79,11 +79,10 @@ export default function FillBiodata() {
                                 <div className="grid grid-cols-2 gap-3">
                                     {[{ value: 'male', label: 'Laki-laki' }, { value: 'female', label: 'Perempuan' }].map((opt) => (
                                         <label key={opt.value}
-                                            className={`flex cursor-pointer items-center gap-2.5 rounded-lg border px-4 py-2.5 text-sm transition ${
-                                                data.gender === opt.value
-                                                    ? 'border-emerald-400 bg-emerald-50 font-semibold text-emerald-700'
-                                                    : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
-                                            }`}>
+                                            className={`flex cursor-pointer items-center gap-2.5 border px-4 py-2.5 text-sm transition ${data.gender === opt.value
+                                                ? 'border-emerald-400 bg-emerald-50 font-semibold text-emerald-700'
+                                                : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
+                                                }`}>
                                             <input type="radio" name="gender" value={opt.value}
                                                 checked={data.gender === opt.value}
                                                 onChange={(e) => setData('gender', e.target.value)}
@@ -198,7 +197,7 @@ export default function FillBiodata() {
                     </SectionCard>
 
                     {/* Submit */}
-                    <div className="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-6 py-4 shadow-sm">
+                    <div className="flex items-center justify-between border border-gray-100 bg-white px-6 py-4 shadow-sm">
                         <p className="text-xs text-gray-500">Pastikan semua data sudah benar sebelum menyimpan.</p>
                         <button type="submit" disabled={processing}
                             className="rounded-lg bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">

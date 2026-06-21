@@ -296,8 +296,8 @@ export default function LandingPage() {
                 {/* Konten hero */}
                 <div style={{ position: "relative", zIndex: 2, width: "100%" }}>
                     <div className="mx-auto max-w-4xl px-6 text-center">
-                        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-sm">
-                            <span className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
+                        <div className="mb-6 inline-flex items-center gap-2 border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-sm">
+                            <span className="h-2 w-2 animate-pulse  bg-blue-400" />
                             <span className="text-xs font-semibold tracking-wide text-white/80">
                                 Platform Pendaftaran Digital
                             </span>
@@ -315,13 +315,13 @@ export default function LandingPage() {
                         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                             <a
                                 href="/register"
-                                className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 font-semibold text-gray-900 transition hover:-translate-y-0.5 hover:bg-white/90 hover:shadow-xl"
+                                className="inline-flex items-center gap-2 bg-white px-7 py-3 font-semibold text-gray-900 transition hover:-translate-y-0.5 hover:bg-white/90 hover:shadow-xl"
                             >
                                 Daftar Sekarang
                             </a>
                             <a
                                 href="#keunggulan"
-                                className="inline-flex items-center gap-2 rounded-full border border-white/30 px-7 py-3 font-semibold text-white transition hover:border-white/60 hover:bg-white/5 hover:-translate-y-0.5"
+                                className="inline-flex items-center gap-2 border border-white/30 px-7 py-3 font-semibold text-white transition hover:border-white/60 hover:bg-white/5 hover:-translate-y-0.5"
                             >
                                 Pelajari Lebih Lanjut
                             </a>
@@ -533,7 +533,7 @@ export default function LandingPage() {
                                 behavior: "smooth",
                             })
                         }
-                        className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-black text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-gray-800"
+                        className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center bg-black text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-gray-800"
                         aria-label="Kembali ke atas"
                     >
                         <ArrowUp size={20} />

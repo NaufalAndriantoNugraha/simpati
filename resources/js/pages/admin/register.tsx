@@ -2,7 +2,7 @@ import { useForm } from '@inertiajs/react';
 import { Layers, Lock, Mail, ShieldCheck, User } from 'lucide-react';
 import React from 'react';
 
-const inputCls = 'block w-full rounded-lg border border-gray-200 px-3 py-2.5 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition placeholder:text-gray-400';
+const inputCls = 'block w-full border border-gray-200 px-3 py-2.5 text-sm text-gray-800 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition placeholder:text-gray-400';
 
 export default function AdminRegister() {
     const { data, setData, post, processing, errors } = useForm({
@@ -16,14 +16,14 @@ export default function AdminRegister() {
             {/* Left panel */}
             <div className="hidden w-[45%] flex-col justify-between bg-gray-900 p-12 lg:flex">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600">
+                    <div className="flex h-9 w-9 items-center justify-center bg-emerald-600">
                         <Layers size={18} className="text-white" />
                     </div>
                     <span className="text-lg font-bold tracking-wide text-white">SIMPATI</span>
                 </div>
 
                 <div>
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600/20">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center bg-emerald-600/20">
                         <ShieldCheck size={24} className="text-emerald-400" />
                     </div>
                     <h2 className="text-3xl font-bold leading-snug text-white">
@@ -41,7 +41,7 @@ export default function AdminRegister() {
             <div className="flex flex-1 items-center justify-center bg-gray-50 px-6 py-12">
                 <div className="w-full max-w-sm">
                     <div className="mb-8 flex items-center gap-2 lg:hidden">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600">
+                        <div className="flex h-8 w-8 items-center justify-center bg-emerald-600">
                             <Layers size={16} className="text-white" />
                         </div>
                         <span className="font-bold text-gray-900">SIMPATI</span>
@@ -92,7 +92,7 @@ export default function AdminRegister() {
                         </div>
 
                         <button type="submit" disabled={processing}
-                            className="mt-2 w-full rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
+                            className="mt-2 w-full bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50 transition">
                             {processing ? 'Memproses...' : 'Daftar'}
                         </button>
                     </form>
