@@ -26,7 +26,6 @@ export default function LandingPage() {
     useEffect(() => {
         const handleScroll = () => {
             setShowScrollTop(window.scrollY > 300);
-            // hero height = 70vh, navbar berubah saat keluar dari hero
             setNavScrolled(window.scrollY > window.innerHeight * 0.7 - 68);
         };
         window.addEventListener("scroll", handleScroll);
@@ -157,7 +156,7 @@ export default function LandingPage() {
         <div className="min-h-screen bg-white text-gray-900">
             <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${navScrolled ? "border-b bg-white/95 shadow-sm backdrop-blur-md" : "border-b border-transparent bg-transparent"}`}>
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-                    <div className={`flex items-center gap-3 transition-colors duration-300 ${navScrolled ? "text-gray-900" : "text-white"}`}>
+                    <div className={`flex items-center gap-3 transition-colors duration-300 ${navScrolled ? "text-emerald-900" : "text-white"}`}>
                         <Layers size={30} />
                         <span className="text-2xl font-bold">SIMPATI</span>
                     </div>
@@ -167,7 +166,7 @@ export default function LandingPage() {
                             <a
                                 key={href}
                                 href={href}
-                                className={`text-lg transition-colors duration-300 hover:underline underline-offset-4 ${navScrolled ? "text-gray-900" : "text-white/90 hover:text-white"}`}
+                                className={`text-lg transition-colors duration-300 hover:underline underline-offset-4 ${navScrolled ? "text-emerald-900" : "text-white/90 hover:text-white"}`}
                             >
                                 {["Beranda", "Keunggulan", "Fitur-Fitur", "FAQ"][i]}
                             </a>
@@ -177,13 +176,13 @@ export default function LandingPage() {
                     <div className="flex items-center gap-3">
                         <a
                             href="/login"
-                            className={`px-4 py-2 transition-all duration-300 ${navScrolled ? "border border-black text-gray-900 hover:bg-gray-100" : "border border-white/50 text-white hover:bg-white/10"}`}
+                            className={`px-4 py-2 transition-all duration-300 ${navScrolled ? "border border-emerald-600 text-emerald-600 hover:bg-emerald-50" : "border border-white/50 text-white hover:bg-white/10"}`}
                         >
                             Login
                         </a>
                         <a
                             href="/register"
-                            className={`px-4 py-2 transition-all duration-300 ${navScrolled ? "bg-black text-white hover:bg-gray-800" : "bg-white text-gray-900 hover:bg-white/90"}`}
+                            className={`px-4 py-2 transition-all duration-300 ${navScrolled ? "bg-emerald-600 text-white hover:bg-emerald-700" : "bg-white text-gray-900 hover:bg-white/90"}`}
                         >
                             Daftar
                         </a>
@@ -296,8 +295,8 @@ export default function LandingPage() {
                 {/* Konten hero */}
                 <div style={{ position: "relative", zIndex: 2, width: "100%" }}>
                     <div className="mx-auto max-w-4xl px-6 text-center">
-                        <div className="mb-6 inline-flex items-center gap-2 border border-white/20 bg-white/10 px-4 py-2 backdrop-blur-sm">
-                            <span className="h-2 w-2 animate-pulse  bg-blue-400" />
+                        <div className="mb-6 inline-flex items-center gap-2 border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 backdrop-blur-sm">
+                            <span className="h-2 w-2 animate-pulse bg-emerald-400" />
                             <span className="text-xs font-semibold tracking-wide text-white/80">
                                 Platform Pendaftaran Digital
                             </span>
@@ -315,13 +314,13 @@ export default function LandingPage() {
                         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                             <a
                                 href="/register"
-                                className="inline-flex items-center gap-2 bg-white px-7 py-3 font-semibold text-gray-900 transition hover:-translate-y-0.5 hover:bg-white/90 hover:shadow-xl"
+                                className="inline-flex items-center gap-2 bg-emerald-500 px-7 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-emerald-600 hover:shadow-xl"
                             >
                                 Daftar Sekarang
                             </a>
                             <a
                                 href="#keunggulan"
-                                className="inline-flex items-center gap-2 border border-white/30 px-7 py-3 font-semibold text-white transition hover:border-white/60 hover:bg-white/5 hover:-translate-y-0.5"
+                                className="inline-flex items-center gap-2 border border-white/30 px-7 py-3 font-semibold text-white transition hover:border-emerald-400 hover:bg-emerald-500/10 hover:-translate-y-0.5"
                             >
                                 Pelajari Lebih Lanjut
                             </a>
@@ -367,12 +366,12 @@ export default function LandingPage() {
                             return (
                                 <div
                                     key={item.title}
-                                    className="group border border-gray-200 bg-white p-6 hover:border-black hover:shadow-lg"
+                                    className="group border border-gray-200 bg-white p-6 hover:border-emerald-500 hover:shadow-lg"
                                 >
-                                    <div className="flex h-14 w-14 items-center justify-center bg-gray-100 transition-colors group-hover:bg-black">
+                                    <div className="flex h-14 w-14 items-center justify-center bg-gray-100 transition-colors group-hover:bg-emerald-600">
                                         <Icon
                                             size={28}
-                                            className="text-black group-hover:text-white"
+                                            className="text-gray-900 group-hover:text-white"
                                         />
                                     </div>
 
@@ -417,8 +416,8 @@ export default function LandingPage() {
                                         key={feature.title}
                                         className="border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg"
                                     >
-                                        <div className="mb-4 flex h-12 w-12 items-center justify-center bg-gray-100">
-                                            <Icon size={24} />
+                                        <div className="mb-4 flex h-12 w-12 items-center justify-center bg-emerald-100">
+                                            <Icon size={24} className="text-emerald-600" />
                                         </div>
 
                                         <h4 className="font-semibold">
@@ -448,8 +447,8 @@ export default function LandingPage() {
                                         key={feature.title}
                                         className="border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg"
                                     >
-                                        <div className="mb-4 flex h-12 w-12 items-center justify-center bg-gray-100">
-                                            <Icon size={24} />
+                                        <div className="mb-4 flex h-12 w-12 items-center justify-center bg-emerald-100">
+                                            <Icon size={24} className="text-emerald-600" />
                                         </div>
 
                                         <h4 className="font-semibold">
@@ -484,26 +483,26 @@ export default function LandingPage() {
                         {faqs.map((faq, index) => (
                             <div
                                 key={index}
-                                className="overflow-hidden border border-gray-200"
+                                className="overflow-hidden border border-gray-200 hover:border-emerald-300"
                             >
                                 <button
                                     onClick={() =>
                                         setOpenIndex(openIndex === index ? null : index)
                                     }
-                                    className="flex w-full items-center justify-between px-6 py-5 text-left"
+                                    className="flex w-full items-center justify-between px-6 py-5 text-left hover:bg-emerald-50/50"
                                 >
                                     <span className="font-medium">
                                         {faq.question}
                                     </span>
 
                                     <ChevronDown
-                                        className={`transition-transform ${openIndex === index ? "rotate-180" : ""
+                                        className={`transition-transform text-emerald-600 ${openIndex === index ? "rotate-180" : ""
                                             }`}
                                     />
                                 </button>
 
                                 {openIndex === index && (
-                                    <div className="border-t border-gray-200 px-6 py-4 text-gray-600">
+                                    <div className="border-t border-gray-200 bg-emerald-50/30 px-6 py-4 text-gray-600">
                                         {faq.answer}
                                     </div>
                                 )}
@@ -513,13 +512,13 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            <footer className="bg-black py-8 text-white">
+            <footer className="bg-emerald-900 py-8 text-white">
                 <div className="mx-auto max-w-7xl px-6 text-center">
                     <h3 className="text-md tracking-wide">
                         SIMPATI -
                         Sistem Pendaftaran Studi Independen
                     </h3>
-                    <p className="mt-4 text-md text-gray-500">
+                    <p className="mt-4 text-md text-emerald-100">
                         © 2026 SIMPATI. All Rights Reserved.
                     </p>
                 </div>
@@ -533,7 +532,7 @@ export default function LandingPage() {
                                 behavior: "smooth",
                             })
                         }
-                        className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center bg-black text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-gray-800"
+                        className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center bg-emerald-600 text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-emerald-700"
                         aria-label="Kembali ke atas"
                     >
                         <ArrowUp size={20} />
